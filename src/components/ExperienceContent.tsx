@@ -5,8 +5,8 @@ import { siteConfig } from "@/data/site";
 export default function ExperienceContent() {
   return (
     <>
-      <div className="flex flex-wrap items-center justify-between gap-3 px-4 mb-6">
-        <h1 className="text-3xl sm:text-4xl font-serif-heading">Experience</h1>
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+        <h2 className="text-3xl sm:text-4xl font-serif-heading">Experience</h2>
         <a
           href={siteConfig.cvUrl}
           className="px-3 py-1.5 rounded-full bg-[color:var(--accent)] text-white hover:bg-[color:var(--accent-dark)] transition-colors"

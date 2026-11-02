@@ -12,10 +12,11 @@ export const siteConfig = {
   cvUrl: "/cv.pdf",
 };
 
+/** In-page sections. `href` is both the anchor target and the scroll-spy key. */
 export const navLinks = [
-  { label: "About", href: "/about", depth: 4 },
-  { label: "Experience", href: "/experience", depth: 1 },
-  { label: "Projects", href: "/projects", depth: 2 },
-  { label: "Contact", href: "/contact", depth: 3 },
+  { label: "About", href: "#about" },
+  { label: "Experience", href: "#experience" },
+  { label: "Projects", href: "#projects" },
+  { label: "Contact", href: "#contact" },
 ];
 
