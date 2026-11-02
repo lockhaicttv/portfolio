@@ -17,19 +17,11 @@ export const experiences = [
   },
   {
     id: "digicommerce",
-    date: "Feb 2022 – Feb 2024",
+    date: "Jun 2021 – Feb 2024",
     title: "Frontend Engineer",
     organization: "Digicommerce",
     description: "Built B2C and B2B e-commerce platforms for international clients.",
     tags: ["Next.js", "React", "TypeScript", "Strapi", "Material-UI"],
-  },
-  {
-    id: "techbase",
-    date: "Jun 2021 – Dec 2021",
-    title: "Intern",
-    organization: "Techbase Vietnam",
-    description: "",
-    tags: [],
   },
   {
     id: "thesis",

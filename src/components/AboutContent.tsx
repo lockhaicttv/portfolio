@@ -1,8 +1,8 @@
 import { about } from "@/data/about";
 import { siteConfig } from "@/data/site";
 import Avatar from "./Avatar";
+import SkillBadges from "./SkillBadges";
 import SocialIcons from "./SocialIcons";
-import TagList from "./TagList";
 
 export default function AboutContent() {
   return (
@@ -54,19 +54,19 @@ export default function AboutContent() {
       <div className="mt-10 grid gap-6 sm:grid-cols-2">
         <div className="rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)]/40 p-5">
           <h3 className="mb-3 text-xl font-serif-heading">Skills</h3>
-          <TagList tags={about.skills} />
+          <SkillBadges skills={about.skills} />
         </div>
 
         <div className="rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)]/40 p-5">
           <h3 className="mb-3 text-xl font-serif-heading">
             Infrastructure &amp; DevOps
           </h3>
-          <TagList tags={about.infrastructure} />
+          <SkillBadges skills={about.infrastructure} />
         </div>
 
         <div className="rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)]/40 p-5">
           <h3 className="mb-3 text-xl font-serif-heading">Soft skills</h3>
-          <TagList tags={about.softSkills} />
+          <SkillBadges skills={about.softSkills} />
         </div>
 
         <div className="rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)]/40 p-5">

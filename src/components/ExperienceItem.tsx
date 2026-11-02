@@ -1,4 +1,4 @@
-import TagList from "./TagList";
+import SkillBadges from "./SkillBadges";
 
 interface ExperienceItemProps {
   date: string;
@@ -29,7 +29,7 @@ export default function ExperienceItem({
         <p className="text-sm opacity-80 whitespace-nowrap">{date}</p>
       </div>
       <div className="mt-3">
-        <TagList tags={tags} />
+        <SkillBadges skills={tags} />
       </div>
     </article>
   );

@@ -3,7 +3,7 @@
 import { useCallback, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import Image from "next/image";
 import { projects } from "@/data/projects";
-import TagList from "./TagList";
+import SkillBadges from "./SkillBadges";
 
 export type ElasticProjectReelProps = {
   /** Camera distance in px. Smaller values exaggerate the depth of the stage. */
@@ -216,7 +216,7 @@ export default function ElasticProjectReel({
                 <div className="col-span-1 flex flex-1 flex-col justify-center gap-4 p-5 sm:col-span-7 sm:p-8 lg:col-span-8 lg:p-10">
                   <div className="flex flex-col gap-3">
                     <div className="flex flex-wrap items-center gap-2">
-                      <TagList tags={project.tags} />
+                      <SkillBadges skills={project.tags} />
                     </div>
                     <p className="text-sm opacity-80">
                       {project.role} · team of {project.teamSize} · {project.period}

@@ -1,4 +1,4 @@
-import TagList from "./TagList";
+import SkillBadges from "./SkillBadges";
 
 interface ProjectCardProps {
   name: string;
@@ -28,7 +28,7 @@ export default function ProjectCard({
       </p>
       <p className="mt-2 text-sm leading-relaxed opacity-95">{description}</p>
       <div className="mt-3">
-        <TagList tags={tags} />
+        <SkillBadges skills={tags} />
       </div>
     </article>
   );
