@@ -75,7 +75,7 @@ export default function TopNav() {
                     aria-current={isActive ? "location" : undefined}
                     className={`shrink-0 px-3 py-1.5 rounded-full text-sm transition-colors ${
                       isActive
-                        ? "bg-[color:var(--accent)] text-white"
+                        ? "bg-[color:var(--accent)] text-[color:var(--accent-contrast)]"
                         : "hover:text-[color:var(--accent)]"
                     }`}
                   >

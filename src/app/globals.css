@@ -1,36 +1,52 @@
 @import "tailwindcss";
 
+/* ---- Branding: Claude / Anthropic palette ----
+   accent #d97757 (Claude orange) · ink #141413 · paper #f4f3ee */
 :root {
-  --bg: #f7f7fc;
-  --surface: #eceaf8;
-  --text: #14132b;
-  --accent: #6d5efc;
-  --accent-dark: #4f46e5;
-  --border: rgba(109, 94, 252, 0.25);
+  --bg: #f4f3ee;
+  --surface: #f0eee6;
+  --text: #141413;
+  --accent: #d97757;
+  --accent-dark: #c15f3c;
+  --accent-contrast: #141413;
+  --border: rgba(193, 95, 60, 0.24);
 }
 
 [data-theme="dark"] {
-  --bg: #0f0e1f;
-  --surface: #1a1933;
-  --text: #eeeefb;
-  --accent: #8b7cff;
-  --accent-dark: #a89bff;
-  --border: rgba(139, 124, 255, 0.4);
+  --bg: #1f1e1b;
+  --surface: #262624;
+  --text: #f4f3ee;
+  --accent: #d97757;
+  --accent-dark: #e89c81;
+  --accent-contrast: #141413;
+  --border: rgba(217, 119, 87, 0.4);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0f0e1f;
-    --surface: #1a1933;
-    --text: #eeeefb;
-    --accent: #8b7cff;
-    --accent-dark: #a89bff;
-    --border: rgba(139, 124, 255, 0.4);
+    --bg: #1f1e1b;
+    --surface: #262624;
+    --text: #f4f3ee;
+    --accent: #d97757;
+    --accent-dark: #e89c81;
+    --accent-contrast: #141413;
+    --border: rgba(217, 119, 87, 0.4);
   }
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Theme toggle glyphs: sun in dark mode, moon in light mode (no JS state). */
+.theme-icon {
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+[data-theme="dark"] .theme-icon-sun,
+[data-theme="light"] .theme-icon-moon {
+  display: inline-flex;
 }
 
 body {

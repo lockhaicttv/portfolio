@@ -9,7 +9,7 @@ export default function ExperienceContent() {
         <h2 className="text-3xl sm:text-4xl font-serif-heading">Experience</h2>
         <a
           href={siteConfig.cvUrl}
-          className="px-3 py-1.5 rounded-full bg-[color:var(--accent)] text-white hover:bg-[color:var(--accent-dark)] transition-colors"
+          className="px-3 py-1.5 rounded-full bg-[color:var(--accent)] text-[color:var(--accent-contrast)] hover:bg-[color:var(--accent-dark)] transition-colors"
         >
           Download CV
         </a>
