@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { about } from "@/data/about";
 import { siteConfig } from "@/data/site";
 import Avatar from "./Avatar";
@@ -71,17 +73,26 @@ export default function AboutContent() {
 
         <div className="rounded-xl border border-[color:var(--border)] bg-[color:var(--surface)]/40 p-5">
           <h3 className="mb-3 text-xl font-serif-heading">Education</h3>
-          <ul className="space-y-3">
+          <ul className="space-y-4">
             {about.education.map((entry) => (
-              <li key={entry.degree}>
-                <p className="font-medium">{entry.degree}</p>
-                <p className="text-sm opacity-90">
-                  {entry.institution}
-                  {entry.location ? `, ${entry.location}` : ""} · {entry.period}
-                </p>
-                {entry.gpa ? (
-                  <p className="text-sm opacity-80">{entry.gpa}</p>
-                ) : null}
+              <li key={entry.degree} className="flex items-start gap-3">
+                <span className="flex h-12 w-16 shrink-0 items-center justify-center">
+                  <Image
+                    src={entry.logo}
+                    alt={`${entry.institution} logo`}
+                    width={128}
+                    height={96}
+                    unoptimized
+                    className="h-full w-full object-contain"
+                  />
+                </span>
+                <div>
+                  <p className="font-medium">{entry.degree}</p>
+                  <p className="text-sm opacity-90">
+                    {entry.institution}
+                    {entry.location ? `, ${entry.location}` : ""} · {entry.period}
+                  </p>
+                </div>
               </li>
             ))}
           </ul>

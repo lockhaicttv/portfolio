@@ -23,13 +23,14 @@ export const about = {
       institution: "VAMK (Vaasa University of Applied Sciences)",
       location: "Finland",
       period: "in progress",
+      logo: "/logos/vamk.svg",
     },
     {
       degree: "BSc Information Technology",
       institution: "Can Tho University",
       location: "",
       period: "Sep 2017 – Aug 2021",
-      gpa: "GPA 3.33/4.00",
+      logo: "/logos/ctu.svg",
     },
   ],
   awards: [

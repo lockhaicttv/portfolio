@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 import { siteConfig } from "@/data/site";
 
 function GitHubIcon() {
@@ -42,34 +44,46 @@ function MailIcon() {
   );
 }
 
+interface SocialLinkProps {
+  href: string;
+  label: string;
+  external?: boolean;
+  children: ReactNode;
+}
+
+function SocialLink({ href, label, external, children }: SocialLinkProps) {
+  return (
+    <a
+      href={href}
+      aria-label={label}
+      {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      className="group inline-flex h-10 items-center overflow-hidden rounded-full border border-[color:var(--border)] bg-[color:var(--surface)] px-[10px] transition-colors hover:text-[color:var(--accent)]"
+    >
+      <span className="flex shrink-0 items-center justify-center">
+        {children}
+      </span>
+      <span
+        aria-hidden="true"
+        className="max-w-0 overflow-hidden whitespace-nowrap text-sm opacity-0 transition-[max-width,margin,opacity] duration-300 ease-out group-hover:ml-2 group-hover:max-w-[18rem] group-hover:opacity-100 group-focus-visible:ml-2 group-focus-visible:max-w-[18rem] group-focus-visible:opacity-100"
+      >
+        {label}
+      </span>
+    </a>
+  );
+}
+
 export default function SocialIcons() {
   return (
     <div className="flex items-center gap-3">
-      <a
-        href={siteConfig.socials.github}
-        aria-label="GitHub"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="w-10 h-10 rounded-full flex items-center justify-center bg-[color:var(--surface)] border border-[color:var(--border)] hover:text-[color:var(--accent)] transition-colors"
-      >
+      <SocialLink href={siteConfig.socials.github} label="GitHub" external>
         <GitHubIcon />
-      </a>
-      <a
-        href={siteConfig.socials.linkedin}
-        aria-label="LinkedIn"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="w-10 h-10 rounded-full flex items-center justify-center bg-[color:var(--surface)] border border-[color:var(--border)] hover:text-[color:var(--accent)] transition-colors"
-      >
+      </SocialLink>
+      <SocialLink href={siteConfig.socials.linkedin} label="LinkedIn" external>
         <LinkedInIcon />
-      </a>
-      <a
-        href={`mailto:${siteConfig.email}`}
-        aria-label="Email"
-        className="w-10 h-10 rounded-full flex items-center justify-center bg-[color:var(--surface)] border border-[color:var(--border)] hover:text-[color:var(--accent)] transition-colors"
-      >
+      </SocialLink>
+      <SocialLink href={`mailto:${siteConfig.email}`} label={siteConfig.email}>
         <MailIcon />
-      </a>
+      </SocialLink>
     </div>
   );
 }
