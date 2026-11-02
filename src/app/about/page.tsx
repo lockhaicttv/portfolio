@@ -62,7 +62,9 @@ export default function AboutPage() {
                       {e.institution}
                       {e.location ? `, ${e.location}` : ""} {e.period}
                     </p>
-                    {e.gpa ? <p className="text-sm opacity-80">{e.gpa}</p> : null}
+                    {e.gpa ? (
+                      <p className="text-sm opacity-80">{e.gpa}</p>
+                    ) : null}
                   </li>
                 ))}
               </ul>

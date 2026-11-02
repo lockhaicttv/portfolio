@@ -18,3 +18,4 @@ export const navLinks = [
   { label: "Projects", href: "/projects", depth: 2 },
   { label: "Contact", href: "/contact", depth: 3 },
 ];
+

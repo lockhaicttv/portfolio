@@ -44,7 +44,7 @@ body {
 }
 
 .font-serif-heading {
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-playfair), "Noto Serif", Georgia, serif;
 }
 
 .skip-link {
@@ -171,4 +171,8 @@ body {
     animation-duration: 0s !important;
     animation-delay: 0s !important;
   }
+}
+
+@theme inline {
+  --font-serif-heading: var(--font-heading), Inter, system-ui, sans-serif;
 }

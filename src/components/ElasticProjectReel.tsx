@@ -67,7 +67,7 @@ export default function ElasticProjectReel({
   rim = defaults.rim,
   openSize = defaults.openSize,
 }: ElasticProjectReelProps = {}) {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(-1);
   const [proximity, setProximity] = useState<number[]>(() =>
     projects.map(() => 0),
   );
@@ -102,10 +102,13 @@ export default function ElasticProjectReel({
 
   return (
     <div
-      className="relative flex h-[540px] w-full items-stretch gap-1.5 sm:h-[560px] lg:h-[580px]"
+      className="relative flex h-[540px] w-full items-stretch gap-3 sm:gap-4 lg:gap-5"
       style={{ perspective: `${perspective}px`, perspectiveOrigin: "50% 50%" }}
       onPointerMove={handlePointerMove}
       onPointerLeave={resetProximity}
+      onClick={() => {
+        setActiveIndex(-1);
+      }}
     >
       {projects.map((project, index) => {
         const isActive = activeIndex === index;
@@ -146,9 +149,11 @@ export default function ElasticProjectReel({
             ref={(node) => {
               sliceRefs.current[index] = node;
             }}
-            onMouseEnter={() => setActiveIndex(index)}
             onFocus={() => setActiveIndex(index)}
-            onClick={() => setActiveIndex(index)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setActiveIndex(isActive ? -1 : index);
+            }}
             tabIndex={0}
             role="button"
             aria-expanded={isActive}
@@ -157,7 +162,7 @@ export default function ElasticProjectReel({
             className={[
               "group relative flex overflow-hidden rounded-xl border border-[color:var(--border)] transition-[flex-grow,transform,box-shadow] will-change-transform",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]",
-              isActive ? "cursor-default" : "cursor-pointer",
+              "cursor-pointer",
             ].join(" ")}
           >
             {!isActive && hasImage && (

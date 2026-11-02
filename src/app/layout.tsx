@@ -1,5 +1,13 @@
 import type { Metadata } from "next";
+import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
+
+const heading = Be_Vietnam_Pro({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-heading",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://example.com"),
@@ -38,7 +46,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={heading.variable} suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
