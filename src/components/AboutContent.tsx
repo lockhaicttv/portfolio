@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { about } from "@/data/about";
 import { siteConfig } from "@/data/site";
+import { withBasePath } from "@/lib/basePath";
 import Avatar from "./Avatar";
 import SkillBadges from "./SkillBadges";
 import SocialIcons from "./SocialIcons";
@@ -78,7 +79,7 @@ export default function AboutContent() {
               <li key={entry.degree} className="flex items-start gap-3">
                 <span className="flex h-12 w-16 shrink-0 items-center justify-center">
                   <Image
-                    src={entry.logo}
+                    src={withBasePath(entry.logo)}
                     alt={`${entry.institution} logo`}
                     width={128}
                     height={96}

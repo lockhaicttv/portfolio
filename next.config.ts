@@ -1,19 +1,16 @@
 import type { NextConfig } from "next";
 
+// GitHub Pages serves project sites from /<repo>, so the build needs a basePath.
+// Provided by the workflow (actions/configure-pages outputs base_path); empty locally.
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || undefined;
+
 const nextConfig: NextConfig = {
-  cacheComponents: true,
-  partialPrefetching: true,
-  async redirects() {
-    // The portfolio is a single page now. Keep old bookmarks working by
-    // sending each former route to its section on the home page.
-    return [
-      { source: "/about", destination: "/#about", permanent: true },
-      { source: "/experience", destination: "/#experience", permanent: true },
-      { source: "/projects", destination: "/#projects", permanent: true },
-      { source: "/contact", destination: "/#contact", permanent: true },
-    ];
-  },
+  // GitHub Pages only serves static files.
+  output: "export",
+  basePath,
   images: {
+    // Required by `output: "export"`; images are served as-is.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",

@@ -1,6 +1,7 @@
 import { experiences } from "@/data/experience";
 import ExperienceItem from "./ExperienceItem";
 import { siteConfig } from "@/data/site";
+import { withBasePath } from "@/lib/basePath";
 
 export default function ExperienceContent() {
   return (
@@ -8,7 +9,7 @@ export default function ExperienceContent() {
       <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
         <h2 className="text-3xl sm:text-4xl font-serif-heading">Experience</h2>
         <a
-          href={siteConfig.cvUrl}
+          href={withBasePath(siteConfig.cvUrl)}
           className="px-3 py-1.5 rounded-full bg-[color:var(--accent)] text-[color:var(--accent-contrast)] hover:bg-[color:var(--accent-dark)] transition-colors"
         >
           Download CV

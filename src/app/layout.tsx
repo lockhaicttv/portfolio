@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
+import { withBasePath } from "@/lib/basePath";
 
 const heading = Be_Vietnam_Pro({
   subsets: ["latin", "vietnamese"],
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     locale: "en_US",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: withBasePath("/favicon.ico"),
   },
 };
 
