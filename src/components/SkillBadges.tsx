@@ -26,7 +26,7 @@ function relativeLuminance(hex: string): number {
  */
 function iconTint(brandHex: string): string {
   const brandWeight = relativeLuminance(brandHex) < 0.12 ? 38 : 78;
-  return `color-mix(in srgb, var(--brand) ${brandWeight}%, var(--text))`;
+  return `color-mix(in srgb, var(--brand) ${brandWeight}%, var(--color-foreground))`;
 }
 
 export default function SkillBadges({ skills }: SkillBadgesProps) {
@@ -46,11 +46,11 @@ export default function SkillBadges({ skills }: SkillBadgesProps) {
               className={badgeClass}
               style={{
                 backgroundImage:
-                  "linear-gradient(135deg, color-mix(in srgb, var(--accent) 16%, transparent), color-mix(in srgb, var(--accent) 30%, transparent))",
-                borderColor: "color-mix(in srgb, var(--accent) 50%, var(--border))",
-                color: "color-mix(in srgb, var(--accent) 45%, var(--text))",
+                  "linear-gradient(135deg, color-mix(in srgb, var(--color-accent) 16%, transparent), color-mix(in srgb, var(--color-accent) 30%, transparent))",
+                borderColor: "color-mix(in srgb, var(--color-accent) 50%, var(--color-border))",
+                color: "color-mix(in srgb, var(--color-accent) 45%, var(--color-foreground))",
                 boxShadow:
-                  "0 2px 10px -4px color-mix(in srgb, var(--accent) 55%, transparent)",
+                  "0 2px 10px -4px color-mix(in srgb, var(--color-accent) 55%, transparent)",
               } as CSSProperties}
             >
               <span>{skill}</span>
@@ -71,11 +71,11 @@ export default function SkillBadges({ skills }: SkillBadgesProps) {
               // Brand colour blended with the site's blue accent: tinted fill,
               // a brand-tinted border, and a soft blue glow to make it pop.
               backgroundImage:
-                "linear-gradient(135deg, color-mix(in srgb, var(--brand) 28%, transparent), color-mix(in srgb, var(--accent) 34%, transparent))",
-              borderColor: "color-mix(in srgb, var(--brand) 55%, var(--accent))",
-              color: "color-mix(in srgb, var(--brand) 40%, var(--text))",
+                "linear-gradient(135deg, color-mix(in srgb, var(--brand) 28%, transparent), color-mix(in srgb, var(--color-accent) 34%, transparent))",
+              borderColor: "color-mix(in srgb, var(--brand) 55%, var(--color-accent))",
+              color: "color-mix(in srgb, var(--brand) 40%, var(--color-foreground))",
               boxShadow:
-                "0 2px 10px -4px color-mix(in srgb, var(--accent) 65%, var(--brand))",
+                "0 2px 10px -4px color-mix(in srgb, var(--color-accent) 65%, var(--brand))",
             } as CSSProperties}
           >
             <svg

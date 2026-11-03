@@ -1,104 +1,199 @@
 @import "tailwindcss";
 
-/* ---- Branding: Claude / Anthropic palette ----
-   accent #d97757 (Claude orange) · ink #141413 · paper #f4f3ee */
+/* ---------------------------------------------------------------------------
+   Premium dark engineering × Swiss editorial
+   Charcoal surfaces, off-white type, and electric amber used as a signal.
+--------------------------------------------------------------------------- */
+@theme {
+  --color-background: #101112;
+  --color-surface: #191b1d;
+  --color-surface-elevated: #202224;
+  --color-border: #292d30;
+
+  --color-foreground: #f0f0ec;
+  --color-muted: #a1a5a5;
+  --color-subtle: #808688;
+
+  --color-accent: #ff9d0a;
+  --color-accent-hover: #ffb13d;
+  --color-accent-foreground: #171717;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
 :root {
-  --bg: #f4f3ee;
-  --surface: #f0eee6;
-  --text: #141413;
-  --accent: #d97757;
-  --accent-dark: #c15f3c;
-  --accent-contrast: #141413;
-  --border: rgba(193, 95, 60, 0.24);
+  color-scheme: dark;
+  --page-max-width: 1280px;
+  --gutter: clamp(20px, 5vw, 76px);
+  --section-space: clamp(64px, 8vw, 112px);
 }
 
-[data-theme="dark"] {
-  --bg: #1f1e1b;
-  --surface: #262624;
-  --text: #f4f3ee;
-  --accent: #d97757;
-  --accent-dark: #e89c81;
-  --accent-contrast: #141413;
-  --border: rgba(217, 119, 87, 0.4);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #1f1e1b;
-    --surface: #262624;
-    --text: #f4f3ee;
-    --accent: #d97757;
-    --accent-dark: #e89c81;
-    --accent-contrast: #141413;
-    --border: rgba(217, 119, 87, 0.4);
-  }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 html {
   scroll-behavior: smooth;
-}
-
-/* Theme toggle glyphs: sun in dark mode, moon in light mode (no JS state). */
-.theme-icon {
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-[data-theme="dark"] .theme-icon-sun,
-[data-theme="light"] .theme-icon-moon {
-  display: inline-flex;
+  scroll-padding-top: 6rem;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Helvetica, Arial, sans-serif;
+  min-height: 100dvh;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
 }
 
-.font-serif-heading {
-  font-family: var(--font-playfair), "Noto Serif", Georgia, serif;
-}
-
-.skip-link {
-  position: absolute;
-  left: -999px;
-  top: auto;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-}
-
-.skip-link:focus {
-  left: 1rem;
-  top: 1rem;
-  width: auto;
-  height: auto;
-  padding: 0.5rem 0.75rem;
-  background: var(--surface);
-  color: var(--text);
-  border-radius: 9999px;
-  z-index: 100;
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+::selection {
+  background: color-mix(in srgb, var(--color-accent) 30%, transparent);
+  color: #ffffff;
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
 }
 
-.no-scrollbar {
-  scrollbar-width: none;
-}
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
+@layer components {
+  .page-container {
+    width: 100%;
+    max-width: var(--page-max-width);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .section-shell {
+    padding-block: var(--section-space);
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    line-height: 1.4;
+    text-transform: uppercase;
+    color: var(--color-muted);
+  }
+
+  .eyebrow::before {
+    content: "";
+    width: 1.75rem;
+    height: 1px;
+    flex: none;
+    background: var(--color-accent);
+  }
+
+  .text-display {
+    font-size: clamp(3.2rem, 5vw, 4.8rem);
+    font-weight: 650;
+    line-height: 0.98;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+  }
+
+  .text-section-title {
+    font-size: clamp(1.65rem, 3vw, 2.4rem);
+    font-weight: 620;
+    line-height: 1.08;
+    letter-spacing: -0.032em;
+    text-wrap: balance;
+  }
 }
 
+/* Very quiet engineering grid used behind the hero only. */
+.hero-grid {
+  background-image:
+    linear-gradient(to right, rgba(240, 240, 236, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(240, 240, 236, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+}
+
+/* Accessible skip link. */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 100;
+  padding: 0.65rem 1rem;
+  border-radius: 2px;
+  background: var(--color-accent);
+  color: var(--color-accent-foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: top 150ms ease;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* One-time reveal. `reveal-enabled` is set before paint only when JS is
+   available, so content is never hidden from crawlers or no-JS visitors. */
+.reveal-enabled [data-reveal] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 700ms var(--ease-out-quart),
+    transform 700ms var(--ease-out-quart);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-enabled [data-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hero intro — short, one-time, no looping decoration. */
+@keyframes hero-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-in {
+  animation: hero-in 800ms var(--ease-out-expo) both;
+  animation-delay: var(--hero-delay, 0ms);
+}
+
+/* Subtle hover treatment for project imagery. */
+.project-media img {
+  transition: transform 600ms var(--ease-out-quart), filter 400ms ease;
+}
+
+.group:hover .project-media img,
+.group:focus-visible .project-media img {
+  transform: scale(1.035);
+}
+
+/* ---------------------------------------------------------------------------
+   Motion preferences
+--------------------------------------------------------------------------- */
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
@@ -107,88 +202,14 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
 
-/* ---- View transitions: directional slide (40px + fade) ---- */
-:root {
-  --duration-exit: 150ms;
-  --duration-enter: 210ms;
-  --duration-move: 400ms;
-}
-
-::view-transition {
-  pointer-events: none;
-}
-
-/* Forward: new page slides in from the right, old page leaves to the left */
-::view-transition-old(.nav-forward) {
-  --slide-offset: -40px;
-  animation:
-    var(--duration-exit) ease-in both fade reverse,
-    var(--duration-move) ease-in-out both slide reverse;
-}
-::view-transition-new(.nav-forward) {
-  --slide-offset: 40px;
-  animation:
-    var(--duration-enter) ease-out var(--duration-exit) both fade,
-    var(--duration-move) ease-in-out both slide;
-}
-
-/* Back: new page slides in from the left, old page leaves to the right */
-::view-transition-old(.nav-back) {
-  --slide-offset: 40px;
-  animation:
-    var(--duration-exit) ease-in both fade reverse,
-    var(--duration-move) ease-in-out both slide reverse;
-}
-::view-transition-new(.nav-back) {
-  --slide-offset: -40px;
-  animation:
-    var(--duration-enter) ease-out var(--duration-exit) both fade,
-    var(--duration-move) ease-in-out both slide;
-}
-
-@keyframes slide {
-  from {
-    translate: var(--slide-offset);
-  }
-  to {
-    translate: 0;
-  }
-}
-
-@keyframes fade {
-  from {
-    filter: blur(3px);
-    opacity: 0;
-  }
-  to {
-    filter: blur(0);
+  .reveal-enabled [data-reveal] {
     opacity: 1;
+    transform: none;
   }
-}
 
-/* Keep the top nav anchored during page slides */
-::view-transition-group(site-header) {
-  animation: none;
-  z-index: 100;
-}
-::view-transition-old(site-header) {
-  display: none;
-}
-::view-transition-new(site-header) {
-  animation: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(*),
-  ::view-transition-new(*),
-  ::view-transition-group(*) {
-    animation-duration: 0s !important;
-    animation-delay: 0s !important;
+  .group:hover .project-media img,
+  .group:focus-visible .project-media img {
+    transform: none;
   }
-}
-
-@theme inline {
-  --font-serif-heading: var(--font-heading), Inter, system-ui, sans-serif;
 }

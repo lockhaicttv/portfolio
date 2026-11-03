@@ -1,39 +1,35 @@
 import type { Metadata } from "next";
-import PageShell from "@/components/PageShell";
-import AboutContent from "@/components/AboutContent";
-import ExperienceContent from "@/components/ExperienceContent";
-import ProjectsContent from "@/components/ProjectsContent";
-import ContactContent from "@/components/ContactContent";
-import { siteConfig } from "@/data/site";
+
+import Footer from "@/components/layout/Footer";
+import Navbar from "@/components/layout/Navbar";
+import ScrollReveal from "@/components/ScrollReveal";
+import AboutSection from "@/components/sections/AboutSection";
+import ContactSection from "@/components/sections/ContactSection";
+import ExperienceSection from "@/components/sections/ExperienceSection";
+import ExpertiseSection from "@/components/sections/ExpertiseSection";
+import HeroSection from "@/components/sections/HeroSection";
+import SelectedWorkSection from "@/components/sections/SelectedWorkSection";
 
 export const metadata: Metadata = {
-  title: "Lê Minh Chiến | Full Stack Developer",
-  description: siteConfig.tagline,
+  title: "Chien Le — Full-Stack Engineer",
+  description:
+    "Portfolio of Chien Le, a full-stack engineer building enterprise logistics, e-commerce and cloud-native systems with TypeScript, NestJS, React and PostgreSQL.",
 };
-
-const sectionClass =
-  "scroll-mt-20 border-t border-[color:var(--border)] py-16 sm:py-20";
 
 export default function Home() {
   return (
-    <PageShell>
+    <>
+      <Navbar />
       <main id="content" tabIndex={-1} className="flex-1">
-        <section id="about" className="scroll-mt-20 py-16 sm:py-20">
-          <AboutContent />
-        </section>
-
-        <section id="experience" className={sectionClass}>
-          <ExperienceContent />
-        </section>
-
-        <section id="projects" className={sectionClass}>
-          <ProjectsContent />
-        </section>
-
-        <section id="contact" className={sectionClass}>
-          <ContactContent />
-        </section>
+        <HeroSection />
+        <SelectedWorkSection />
+        <ExperienceSection />
+        <ExpertiseSection />
+        <AboutSection />
+        <ContactSection />
       </main>
-    </PageShell>
+      <Footer />
+      <ScrollReveal />
+    </>
   );
 }

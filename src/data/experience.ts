@@ -1,34 +1,41 @@
-export const experiences = [
-  {
-    id: "masters",
-    date: "Aug 2026 – Present",
-    title: "Master's Studies",
-    organization: "VAMK, Finland",
-    description: "Cloud-Based Software Engineering.",
-    tags: [],
-  },
+export type Experience = {
+  id: string;
+  company: string;
+  role: string;
+  period: string;
+  location: string;
+  context: string;
+  contributions: string[];
+  technologies: string[];
+};
+
+export const experiences: Experience[] = [
   {
     id: "cyberlogitec",
-    date: "Feb 2024 – Jul 2026",
-    title: "Full Stack Engineer",
-    organization: "Cyberlogitec Vietnam",
-    description: "Led backend architecture and business-logic migration on the Equipment Movement System.",
-    tags: ["NestJS", "Next.js", "TypeScript", "GraphQL", "PostgreSQL"],
+    company: "Cyberlogitec Vietnam",
+    role: "Full-Stack Engineer",
+    period: "Feb 2024 – Jul 2026",
+    location: "Vietnam",
+    context: "Container logistics · enterprise systems",
+    contributions: [
+      "Migrated container, genset and transit-event business logic from a legacy system into modular microservices.",
+      "Built NestJS services, GraphQL BFF APIs and gRPC methods on PostgreSQL, with Next.js operator screens.",
+      "Led an internal LMS from UI to APIs and set up GraphQL codegen that removed repetitive hook work for the team.",
+    ],
+    technologies: ["NestJS", "GraphQL", "PostgreSQL", "Next.js"],
   },
   {
     id: "digicommerce",
-    date: "Jun 2021 – Feb 2024",
-    title: "Frontend Engineer",
-    organization: "Digicommerce",
-    description: "Built B2C and B2B e-commerce platforms for international clients.",
-    tags: ["Next.js", "React", "TypeScript", "Strapi", "Material-UI"],
-  },
-  {
-    id: "thesis",
-    date: "Jan 2021 – Jun 2021",
-    title: "Thesis",
-    organization: "Can Tho University",
-    description: "",
-    tags: [],
+    company: "Digicommerce",
+    role: "Frontend Engineer",
+    period: "Sep 2021 – Feb 2024",
+    location: "Vietnam",
+    context: "E-commerce · B2B platforms",
+    contributions: [
+      "Developed a pharma distribution storefront, back office and Strapi CMS for a US client.",
+      "Restructured the codebase into a monorepo with shared components and a shared API SDK.",
+      "Maintained B2B ERP and demo platforms while rebuilding legacy CMS editing flows.",
+    ],
+    technologies: ["React", "Next.js", "TypeScript", "Strapi"],
   },
 ];

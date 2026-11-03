@@ -7,6 +7,8 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || undefined;
 const nextConfig: NextConfig = {
   // GitHub Pages only serves static files.
   output: "export",
+  // Emit folder/index.html files so project paths work without a server.
+  trailingSlash: true,
   basePath,
   images: {
     // Required by `output: "export"`; images are served as-is.

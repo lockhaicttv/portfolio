@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import Image from "next/image";
 import { projects } from "@/data/projects";
+import { withBasePath } from "@/lib/basePath";
 import SkillBadges from "./SkillBadges";
 
 export type ElasticProjectReelProps = {
@@ -145,7 +146,7 @@ export default function ElasticProjectReel({
 
         return (
           <article
-            key={project.id}
+            key={project.slug}
             ref={(node) => {
               sliceRefs.current[index] = node;
             }}
@@ -157,11 +158,11 @@ export default function ElasticProjectReel({
             tabIndex={0}
             role="button"
             aria-expanded={isActive}
-            aria-label={project.name}
+            aria-label={project.title}
             style={sliceStyle}
             className={[
-              "group relative flex overflow-hidden rounded-xl border border-[color:var(--border)] transition-[flex-grow,transform,box-shadow] will-change-transform",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-[color:var(--bg)]",
+              "group relative flex overflow-hidden rounded-xl border border-border transition-[flex-grow,transform,box-shadow] will-change-transform",
+              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background",
               "cursor-pointer",
             ].join(" ")}
           >
@@ -170,17 +171,17 @@ export default function ElasticProjectReel({
                 <div
                   className="absolute inset-0 -z-20 scale-110 bg-cover bg-center"
                   style={{
-                    backgroundImage: `url(${project.image})`,
+                    backgroundImage: `url(${withBasePath(project.image)})`,
                     filter: `blur(${(blur * 16).toFixed(1)}px)`,
                   }}
                   aria-hidden
                 />
                 <div
                   className="absolute inset-0 -z-10"
-                  style={{ backgroundColor: "var(--bg)", opacity: dim }}
+                  style={{ backgroundColor: "var(--color-background)", opacity: dim }}
                   aria-hidden
                 />
-                <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-[color:var(--bg)]/40 to-[color:var(--bg)]/90" />
+                <div className="absolute inset-0 -z-10 bg-gradient-to-b from-transparent via-background/40 to-background/90" />
               </>
             )}
 
@@ -190,7 +191,7 @@ export default function ElasticProjectReel({
                   className="select-none whitespace-nowrap text-sm font-medium uppercase tracking-[0.4em] [writing-mode:vertical-rl] rotate-180 sm:text-base"
                   style={{ opacity: 0.55 + hover * 0.45 }}
                 >
-                  {project.name}
+                  {project.title}
                 </h3>
               </div>
             )}
@@ -200,35 +201,37 @@ export default function ElasticProjectReel({
                 <div className="relative col-span-1 h-52 sm:col-span-5 sm:h-full lg:col-span-4">
                   {hasImage ? (
                     <Image
-                      src={project.image}
-                      alt={`Ảnh đại diện dự án ${project.name}`}
+                      src={withBasePath(project.image)}
+                      alt={`Ảnh đại diện dự án ${project.title}`}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 42vw, 34vw"
                       className="object-cover"
                       priority={index === 0}
                     />
                   ) : (
-                    <div className="h-full w-full bg-gradient-to-br from-[color:var(--accent)]/25 to-transparent" />
+                    <div className="h-full w-full bg-gradient-to-br from-accent/25 to-transparent" />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[color:var(--surface)] via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:to-[color:var(--surface)]" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:to-surface" />
                 </div>
 
                 <div className="col-span-1 flex flex-1 flex-col justify-center gap-4 p-5 sm:col-span-7 sm:p-8 lg:col-span-8 lg:p-10">
                   <div className="flex flex-col gap-3">
                     <div className="flex flex-wrap items-center gap-2">
-                      <SkillBadges skills={project.tags} />
+                      <SkillBadges skills={project.technologies} />
                     </div>
                     <p className="text-sm opacity-80">
-                      {project.role} · team of {project.teamSize} · {project.period}
+                      {project.role}
+                      {project.teamSize ? ` · team of ${project.teamSize}` : ""} ·{" "}
+                      {project.period}
                     </p>
                   </div>
 
                   <div className="max-w-3xl">
                     <h2 className="mb-2 text-xl font-medium sm:text-2xl lg:text-3xl">
-                      {project.name}
+                      {project.title}
                     </h2>
                     <p className="text-sm leading-relaxed opacity-95 sm:text-base">
-                      {project.description}
+                      {project.summary}
                     </p>
                   </div>
                 </div>
