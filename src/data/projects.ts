@@ -5,6 +5,8 @@ export type Project = {
   summary: string;
   image: string;
   imageAlt: string;
+  /** CSS object-position for cropped views, e.g. "50% 70%" to favour the lower part. */
+  imagePosition?: string;
   technologies: string[];
   period: string;
   role: string;
@@ -32,7 +34,8 @@ export const projects: Project[] = [
       "A container-logistics platform for tracking equipment, gensets and transit events — rebuilt as modular services instead of legacy business logic.",
     image: "/images/project-equipment.jpg",
     imageAlt:
-      "Stacked shipping containers at a logistics terminal, photographed in cool tones",
+      "Stacks of white refrigerated shipping containers at a terminal under a clear sky",
+    imagePosition: "50% 72%",
     technologies: ["NestJS", "GraphQL", "PostgreSQL", "Next.js", "gRPC"],
     period: "Jun 2024 – Jun 2026",
     role: "Full-Stack Engineer",
@@ -64,9 +67,10 @@ export const projects: Project[] = [
     category: "Internal platform",
     summary:
       "An internal LMS that showcases the company's corporate-training offering — led end to end, from UI to APIs, and approved for production launch.",
-    image: "/images/project-lms.svg",
+    image: "/images/project-lms.jpg",
     imageAlt:
-      "Abstract illustration of course modules and a progress track, representing a learning management system",
+      "Word cloud around the words Learning Management System, with a hand writing on it",
+    imagePosition: "35% 45%",
     technologies: ["Next.js", "NestJS", "GraphQL", "Ant Design"],
     period: "Feb – May 2024",
     role: "Full-Stack Engineer · Project lead",
@@ -98,7 +102,8 @@ export const projects: Project[] = [
       "A B2C storefront, back office and CMS for a US pharmaceutical distributor offering health-insurance plans — restructured into a shared monorepo with a common API SDK.",
     image: "/images/project-pharma.jpg",
     imageAlt:
-      "Pharmacy shelving and health products, representing a pharmaceutical commerce platform",
+      "Office tower crowned by a large illuminated HIGHMARK sign against a blue sky",
+    imagePosition: "50% 56%",
     technologies: ["Next.js", "React", "Strapi", "Material UI"],
     period: "Sep 2022 – Feb 2024",
     role: "Frontend Engineer",
@@ -128,9 +133,10 @@ export const projects: Project[] = [
     category: "B2B ERP",
     summary:
       "Customer-facing tools for a B2B ERP in the hardwood industry — log inventory, timber contracts and auction-based procurement.",
-    image: "/images/project-hardwood.svg",
+    image: "/images/project-hardwood.jpg",
     imageAlt:
-      "Abstract illustration of timber log cross-sections, representing a hardwood-industry ERP",
+      "Two people inspecting large hardwood logs stacked in a timber yard",
+    imagePosition: "40% 50%",
     technologies: ["Next.js", "React", "Strapi", "Material UI"],
     period: "May – Sep 2022",
     role: "Frontend Engineer",
@@ -162,7 +168,8 @@ export const projects: Project[] = [
       "A B2B demo storefront backed by Elastic Path, kept reliable for sales demonstrations while its CMS and customer-facing tools were maintained.",
     image: "/images/project-b2b.jpg",
     imageAlt:
-      "Analytics dashboard on a laptop screen, representing a B2B enterprise platform",
+      "Hand touching a glowing E-commerce interface surrounded by shopping-cart icons",
+    imagePosition: "50% 48%",
     technologies: ["React", "Next.js", "Strapi"],
     period: "Feb – May 2022",
     role: "Frontend Engineer",

@@ -26,6 +26,7 @@ export default function ProjectCard({ project, priority }: ProjectCardProps) {
             fill
             priority={priority}
             sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 25vw"
+            style={{ objectPosition: project.imagePosition }}
             className="object-cover grayscale-[0.2] brightness-[0.85]"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />

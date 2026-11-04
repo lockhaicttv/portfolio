@@ -192,6 +192,7 @@ export default function ElasticProjectReel({
                   className="absolute inset-0 -z-20 scale-110 bg-cover bg-center"
                   style={{
                     backgroundImage: `url(${withBasePath(project.image)})`,
+                    backgroundPosition: project.imagePosition,
                     filter: `blur(${(blur * 16).toFixed(1)}px)`,
                   }}
                   aria-hidden
@@ -227,6 +228,7 @@ export default function ElasticProjectReel({
                       src={withBasePath(project.image)}
                       alt={project.imageAlt}
                       fill
+                      style={{ objectPosition: project.imagePosition }}
                       sizes="16vw"
                       className="object-cover grayscale-[0.2] brightness-[0.85]"
                       priority={index === defaultActive}

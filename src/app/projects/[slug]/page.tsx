@@ -186,6 +186,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 fill
                 priority
                 sizes="(max-width: 1280px) 100vw, 1280px"
+                style={{ objectPosition: project.imagePosition }}
                 className="object-cover grayscale-[0.35] contrast-110 brightness-[0.85]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />

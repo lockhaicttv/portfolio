@@ -14,10 +14,10 @@ import { withBasePath } from "@/lib/basePath";
 const technologies = ["TypeScript", "NestJS", "React", "PostgreSQL", "Docker"];
 
 /**
- * Optional cut-out portrait (transparent PNG works best), e.g.
- * "/images/portrait.png". When null, the architecture image fills the slot.
+ * Cut-out monochrome portrait with a transparent background. Set to null to
+ * let the architecture image fill the slot instead.
  */
-const PORTRAIT_SRC: string | null = null;
+const PORTRAIT_SRC: string | null = "/images/portrait-winter.webp";
 
 const stats: {
   icon: ComponentType<SVGProps<SVGSVGElement>>;
@@ -49,7 +49,7 @@ export default function HeroSection() {
         <div
           className={`hero-building absolute bottom-0 bg-surface ${
             PORTRAIT_SRC
-              ? "left-[18%] h-[78%] w-[30%]"
+              ? "left-[18%] h-[80%] w-[34%] opacity-80 xl:left-[4%]"
               : "left-[22%] h-[84%] w-[40%]"
           }`}
         >
@@ -65,14 +65,17 @@ export default function HeroSection() {
         </div>
 
         {PORTRAIT_SRC ? (
-          <div className="absolute bottom-0 left-[44%] h-[96%] w-[30%]">
+          // Desktop only: on narrow screens it would sit behind the copy.
+          // lg anchors right to clear the text; xl centres it in front of the
+          // building and stops short of the stats column.
+          <div className="absolute bottom-0 right-0 hidden h-[73%] w-[47%] lg:block xl:left-[11.5%] xl:right-auto xl:w-[51%]">
             <Image
               src={withBasePath(PORTRAIT_SRC)}
               alt=""
               fill
               priority
-              sizes="(max-width: 1023px) 40vw, 20vw"
-              className="object-contain object-bottom grayscale"
+              sizes="(max-width: 1279px) 35vw, 40vw"
+              className="object-contain object-bottom"
             />
           </div>
         ) : null}

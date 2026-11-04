@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { navLinks, siteConfig } from "@/data/site";
+import { navLinks } from "@/data/site";
 import { withBasePath } from "@/lib/basePath";
 import { ArrowRight, CloseIcon, MenuIcon } from "@/components/ui/Icons";
 
@@ -109,10 +109,10 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
         <div className="page-container grid h-[68px] grid-cols-[1fr_auto_1fr] items-center gap-4">
           <a
             href={isHome ? "#home" : withBasePath("/")}
-            aria-label={`L.C. — ${siteConfig.displayName} home`}
-            className="justify-self-start text-[1.75rem] font-extrabold leading-none tracking-[-0.02em]"
+            aria-label="Chien Le Minh — home"
+            className="justify-self-start whitespace-nowrap text-[1.375rem] font-extrabold leading-none tracking-[-0.02em]"
           >
-            L.C<span className="text-accent">.</span>
+            <span className="text-accent">Chien</span> Le Minh
           </a>
 
           <nav aria-label="Primary" className="hidden lg:block">
@@ -144,7 +144,7 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
             </ul>
           </nav>
 
-          <div className="flex items-center justify-self-end gap-2">
+          <div className="col-start-3 flex items-center justify-self-end gap-2">
             <a
               href={hrefFor("#contact")}
               className="group/cta hidden h-10 items-center gap-2 rounded-md border border-accent bg-background/85 px-[18px] text-sm font-medium text-foreground backdrop-blur-sm transition-colors hover:bg-[#2a1d0e] sm:inline-flex"
