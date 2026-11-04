@@ -9,11 +9,11 @@ import { withBasePath } from "@/lib/basePath";
 /** Experience timeline and technical expertise share one band, as in the reference. */
 export default function ExperienceSection() {
   return (
-    <section id="experience" className="scroll-mt-20 border-b border-border">
+    <section id="experience" className="scroll-mt-20">
       <PageContainer>
         <div className="grid py-10 xl:grid-cols-2 xl:py-8">
           <div
-            className="grid gap-8 border-b border-border pb-10 md:grid-cols-[260px_1fr] xl:grid-cols-[230px_1fr] xl:border-b-0 xl:border-r xl:pb-0 xl:pr-10"
+            className="grid gap-8 border-b border-border pb-10 md:grid-cols-[260px_1fr] xl:grid-cols-[230px_1fr] relative xl:border-b-0 xl:border-r xl:pb-0 xl:pr-10 xl:vline-glow-r [--glow-delay:1.5s]"
             data-reveal
           >
             <div>

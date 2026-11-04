@@ -25,9 +25,22 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(!isHome);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
+  /**
+   * Section the user explicitly picked (nav click or URL hash). While set,
+   * scroll spy is paused: sections that share a row (About/Contact) or sit at
+   * the page bottom can't all reach the top, so the spy would otherwise
+   * highlight a different item than the one clicked.
+   */
+  const pinnedHrefRef = useRef<string | null>(null);
 
   const hrefFor = (hash: string) =>
     isHome ? hash : withBasePath(`/${hash}`);
+
+  const pinSection = (href: string) => {
+    if (!isHome || !navLinks.some((link) => link.href === href)) return;
+    pinnedHrefRef.current = href;
+    setActiveHref(href);
+  };
 
   useEffect(() => {
     if (!isHome) return;
@@ -38,7 +51,38 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
 
     if (sections.length === 0) return;
 
+    const pinFromHash = () => {
+      const hash = window.location.hash;
+      if (navLinks.some((link) => link.href === hash)) {
+        pinnedHrefRef.current = hash;
+        setActiveHref(hash);
+      }
+    };
+
+    // Any scroll the user starts themselves hands control back to scroll spy.
+    const SCROLL_KEYS = new Set([
+      "ArrowUp",
+      "ArrowDown",
+      "PageUp",
+      "PageDown",
+      "Home",
+      "End",
+      " ",
+    ]);
+    const releasePin = () => {
+      pinnedHrefRef.current = null;
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (SCROLL_KEYS.has(event.key)) releasePin();
+    };
+    const onPointerDown = (event: PointerEvent) => {
+      // Dragging the page scrollbar targets the root element.
+      if (event.target === document.documentElement) releasePin();
+    };
+
     const updateActiveSection = () => {
+      if (pinnedHrefRef.current) return;
+
       let current = "#home";
       let currentTop = -Infinity;
 
@@ -63,13 +107,24 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
       setActiveHref(current);
     };
 
+    pinFromHash();
     updateActiveSection();
     window.addEventListener("scroll", updateActiveSection, { passive: true });
     window.addEventListener("resize", updateActiveSection);
+    window.addEventListener("hashchange", pinFromHash);
+    window.addEventListener("wheel", releasePin, { passive: true });
+    window.addEventListener("touchstart", releasePin, { passive: true });
+    window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("pointerdown", onPointerDown);
 
     return () => {
       window.removeEventListener("scroll", updateActiveSection);
       window.removeEventListener("resize", updateActiveSection);
+      window.removeEventListener("hashchange", pinFromHash);
+      window.removeEventListener("wheel", releasePin);
+      window.removeEventListener("touchstart", releasePin);
+      window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("pointerdown", onPointerDown);
     };
   }, [isHome]);
 
@@ -109,6 +164,7 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
         <div className="page-container grid h-[68px] grid-cols-[1fr_auto_1fr] items-center gap-4">
           <a
             href={isHome ? "#home" : withBasePath("/")}
+            onClick={() => pinSection("#home")}
             aria-label="Chien Le Minh — home"
             className="justify-self-start whitespace-nowrap text-[1.375rem] font-extrabold leading-none tracking-[-0.02em]"
           >
@@ -123,6 +179,7 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
                   <li key={link.href}>
                     <a
                       href={hrefFor(link.href)}
+                      onClick={() => pinSection(link.href)}
                       aria-current={isActive ? "location" : undefined}
                       className={`relative inline-flex py-1.5 text-sm transition-colors ${
                         isActive
@@ -147,6 +204,7 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
           <div className="col-start-3 flex items-center justify-self-end gap-2">
             <a
               href={hrefFor("#contact")}
+              onClick={() => pinSection("#contact")}
               className="group/cta hidden h-10 items-center gap-2 rounded-md border border-accent bg-background/85 px-[18px] text-sm font-medium text-foreground backdrop-blur-sm transition-colors hover:bg-[#2a1d0e] sm:inline-flex"
             >
               Let&apos;s Talk
@@ -186,7 +244,10 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
                   <li key={link.href}>
                     <a
                       href={hrefFor(link.href)}
-                      onClick={() => setOpen(false)}
+                      onClick={() => {
+                        setOpen(false);
+                        pinSection(link.href);
+                      }}
                       aria-current={isActive ? "location" : undefined}
                       className={`flex min-h-12 items-center justify-between border-b border-border/60 text-[0.95rem] ${
                         isActive ? "text-accent" : "text-muted"
@@ -203,7 +264,10 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
             </ul>
             <a
               href={hrefFor("#contact")}
-              onClick={() => setOpen(false)}
+              onClick={() => {
+                setOpen(false);
+                pinSection("#contact");
+              }}
               className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-accent text-sm font-semibold text-accent-foreground"
             >
               Let&apos;s Talk

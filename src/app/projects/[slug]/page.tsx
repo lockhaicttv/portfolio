@@ -210,7 +210,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <p className="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-subtle">
                       On this page
                     </p>
-                    <ul className="mt-4 border-l border-border">
+                    <ul className="relative mt-4 border-l border-border vline-glow-l">
                       {contents.map((item) => (
                         <li key={item.id}>
                           <a

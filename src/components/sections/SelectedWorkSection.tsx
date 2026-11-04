@@ -10,7 +10,7 @@ import { siteConfig } from "@/data/site";
 
 export default function SelectedWorkSection() {
   return (
-    <section id="projects" className="scroll-mt-20 border-b border-border">
+    <section id="projects" className="scroll-mt-20">
       <PageContainer>
         <div className="grid gap-8 py-10 lg:grid-cols-[300px_1fr] lg:gap-[42px] lg:py-8">
           <div data-reveal>

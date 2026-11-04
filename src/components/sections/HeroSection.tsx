@@ -35,7 +35,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="hero-backdrop relative overflow-hidden border-b border-border lg:min-h-[560px]"
+      className="hero-backdrop relative overflow-hidden lg:min-h-[560px]"
     >
       {/* Visual composition — decorative, faded behind the copy on small screens. */}
       <div
@@ -131,7 +131,7 @@ export default function HeroSection() {
       </PageContainer>
 
       <dl
-        className="hero-in absolute right-[70px] top-1/2 z-10 hidden -translate-y-[35%] flex-col gap-6 border-l border-border-strong pl-6 xl:flex"
+        className="hero-in absolute right-[70px] top-1/2 z-10 hidden -translate-y-[35%] flex-col gap-6 border-l border-border-strong pl-6 xl:flex vline-glow-l [--glow-delay:0.9s]"
         style={delay(460)}
       >
         {stats.map(({ icon: Icon, title, caption }) => (

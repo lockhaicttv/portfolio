@@ -21,7 +21,7 @@ export default function AboutSection() {
         </h2>
       </div>
 
-      <div className="md:border-l md:border-border md:pl-8">
+      <div className="relative md:border-l md:border-border md:pl-8 md:vline-glow-l [--glow-delay:2.4s]">
         <p className="max-w-[340px] text-sm leading-relaxed text-[#d6d6d6]">
           {about.summary}
         </p>

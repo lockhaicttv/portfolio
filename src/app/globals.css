@@ -247,6 +247,135 @@ body {
   animation-delay: var(--hero-delay, 0ms);
 }
 
+/* Amber streaks that sweep along the layout's hairlines, alternating
+   direction each pass. Timing is shared by horizontal and vertical lines:
+   each sweep takes ~3.6s, with ~3s of rest in between. */
+:root {
+  --glow-duration: 6.6s;
+}
+
+/* Section hairline (horizontal). */
+.divider-glow {
+  position: relative;
+  height: 1px;
+  width: 100%;
+  background: var(--color-border);
+  /* Clip the streak horizontally but let its soft glow spill vertically. */
+  overflow-x: clip;
+  overflow-y: visible;
+}
+
+.divider-glow::before,
+.divider-glow::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 35%,
+    var(--color-accent) 50%,
+    transparent 65%
+  );
+  transform: translateX(-100%);
+  animation: divider-sweep var(--glow-duration) ease-in-out
+    var(--glow-delay, 0s) infinite alternate;
+}
+
+/* The crisp line. */
+.divider-glow::after {
+  top: 0;
+  height: 1px;
+}
+
+/* The soft halo around it. */
+.divider-glow::before {
+  top: -3px;
+  height: 7px;
+  opacity: 0.45;
+  filter: blur(4px);
+}
+
+@keyframes divider-sweep {
+  0%,
+  23% {
+    transform: translateX(-100%);
+  }
+  77%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/*
+ * Vertical streak on an element's existing left/right border. Used as a
+ * Tailwind utility so it can follow the border's breakpoint
+ * (e.g. `md:border-l md:vline-glow-l`). The host needs a positioning context.
+ * The streak moves via background-position, so it stays inside the element
+ * without needing overflow clipping on the host.
+ */
+@utility vline-glow-l {
+  &::before,
+  &::after {
+    left: -1px;
+  }
+  @apply vline-glow-base;
+}
+
+@utility vline-glow-r {
+  &::before,
+  &::after {
+    right: -1px;
+  }
+  @apply vline-glow-base;
+}
+
+@utility vline-glow-base {
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    pointer-events: none;
+    background: linear-gradient(
+        180deg,
+        transparent,
+        var(--color-accent) 50%,
+        transparent
+      )
+      no-repeat;
+    background-size: 100% 30%;
+    background-position: 0 -43%;
+    animation: vline-sweep var(--glow-duration) ease-in-out
+      var(--glow-delay, 0s) infinite alternate;
+  }
+  /* The crisp line. */
+  &::after {
+    width: 1px;
+  }
+  /* The soft halo around it. */
+  &::before {
+    width: 7px;
+    margin-inline: -3px;
+    opacity: 0.45;
+    filter: blur(4px);
+  }
+}
+
+/* With a 30%-tall streak, -43% sits just above the box and 143% just below. */
+@keyframes vline-sweep {
+  0%,
+  23% {
+    background-position: 0 -43%;
+  }
+  77%,
+  100% {
+    background-position: 0 143%;
+  }
+}
+
 /* Subtle hover treatment for project imagery. */
 .project-media img {
   transition: transform 600ms var(--ease-out-quart), filter 400ms ease;
@@ -277,6 +406,13 @@ body {
   .reveal-enabled [data-reveal] {
     opacity: 1;
     transform: none;
+  }
+
+  .divider-glow::before,
+  .divider-glow::after,
+  [class*="vline-glow"]::before,
+  [class*="vline-glow"]::after {
+    display: none;
   }
 
   .group:hover .project-media img,
