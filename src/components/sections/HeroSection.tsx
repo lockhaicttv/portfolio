@@ -1,156 +1,148 @@
 import Image from "next/image";
-import type { CSSProperties } from "react";
+import type { CSSProperties, ComponentType, SVGProps } from "react";
 
 import Button from "@/components/ui/Button";
 import TechTag from "@/components/ui/TechTag";
-import { ArrowDown } from "@/components/ui/Icons";
+import {
+  BriefcaseIcon,
+  CodeIcon,
+  GraduationIcon,
+} from "@/components/ui/Icons";
 import PageContainer from "@/components/layout/PageContainer";
-import { siteConfig } from "@/data/site";
 import { withBasePath } from "@/lib/basePath";
 
 const technologies = ["TypeScript", "NestJS", "React", "PostgreSQL", "Docker"];
 
-const proofPoints = [
-  "Full-stack engineering experience",
-  "Enterprise logistics systems",
-  "MSc in Cloud-Based Software Engineering at VAMK",
+/**
+ * Optional cut-out portrait (transparent PNG works best), e.g.
+ * "/images/portrait.png". When null, the architecture image fills the slot.
+ */
+const PORTRAIT_SRC: string | null = null;
+
+const stats: {
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
+  title: string;
+  caption: string;
+}[] = [
+  { icon: BriefcaseIcon, title: "~5 Years", caption: "Experience" },
+  { icon: CodeIcon, title: "Full-Stack", caption: "Engineer" },
+  { icon: GraduationIcon, title: "Cloud Engineering", caption: "MSc @ VAMK" },
 ];
+
+const delay = (ms: number) => ({ "--hero-delay": `${ms}ms` }) as CSSProperties;
 
 export default function HeroSection() {
   return (
-    <section id="home" className="relative overflow-hidden">
+    <section
+      id="home"
+      className="hero-backdrop relative overflow-hidden border-b border-border lg:min-h-[560px]"
+    >
+      {/* Visual composition — decorative, faded behind the copy on small screens. */}
       <div
         aria-hidden
-        className="hero-grid pointer-events-none absolute inset-0 -z-10"
-      />
-      <PageContainer className="relative pb-16 pt-12 sm:pb-20 sm:pt-16 lg:pb-24 lg:pt-20 xl:pb-28">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-8 xl:gap-10">
-          <div className="lg:col-span-7 xl:col-span-6">
-            <p className="eyebrow hero-in" style={{ "--hero-delay": "40ms" } as CSSProperties}>
-              Full-Stack Engineer / Finland
-            </p>
+        className="hero-in pointer-events-none absolute inset-y-0 right-0 w-full opacity-20 lg:w-[62%] lg:opacity-100"
+        style={delay(200)}
+      >
+        <div className="hero-stripe hidden lg:block -top-[180px] right-[28%] h-[900px] w-[120px] opacity-95" />
+        <div className="hero-stripe hidden lg:block right-[44%] top-5 h-[520px] w-[70px] opacity-90" />
 
-            <h1
-              className="text-display hero-in mt-7 max-w-[13ch] text-foreground"
-              style={{ "--hero-delay": "120ms" } as CSSProperties}
-            >
-              Engineering systems that scale{" "}
-              <span className="text-accent">beyond</span> the interface.
-            </h1>
-
-            <p
-              className="hero-in mt-7 max-w-xl text-[1.02rem] leading-relaxed text-muted sm:text-lg"
-              style={{ "--hero-delay": "220ms" } as CSSProperties}
-            >
-              I build robust backend architectures, modern web applications, and
-              reliable cloud-native systems.
-            </p>
-
-            <ul
-              className="hero-in mt-8 flex flex-wrap gap-2"
-              aria-label="Primary technologies"
-              style={{ "--hero-delay": "300ms" } as CSSProperties}
-            >
-              {technologies.map((technology) => (
-                <li key={technology}>
-                  <TechTag>{technology}</TechTag>
-                </li>
-              ))}
-            </ul>
-
-            <div
-              className="hero-in mt-9 flex flex-col gap-3 sm:flex-row"
-              style={{ "--hero-delay": "380ms" } as CSSProperties}
-            >
-              <Button href="#projects">View My Projects</Button>
-              <Button href="#about" variant="secondary" arrow={false}>
-                Learn More
-              </Button>
-            </div>
-
-            <p
-              className="hero-in mt-8 inline-flex items-center gap-2.5 font-mono text-[0.68rem] uppercase tracking-[0.12em] text-subtle"
-              style={{ "--hero-delay": "440ms" } as CSSProperties}
-            >
-              <span
-                aria-hidden
-                className="h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
-              />
-              {siteConfig.availability}
-            </p>
-          </div>
-
-          <div
-            className="hero-in relative lg:col-span-5 xl:col-span-4"
-            style={{ "--hero-delay": "260ms" } as CSSProperties}
-          >
-            <div
-              aria-hidden
-              className="absolute -right-3 top-8 h-[86%] w-[62%] border border-accent/30 bg-accent/10"
-              style={{
-                clipPath: "polygon(38% 0, 100% 0, 100% 100%, 0 100%)",
-              }}
-            />
-            <div
-              aria-hidden
-              className="absolute -left-3 bottom-10 top-24 w-px bg-accent/50"
-            />
-            <div className="relative aspect-[4/5] overflow-hidden border border-border bg-surface">
-              <Image
-                src={withBasePath("/images/hero-architecture.jpg")}
-                alt="Monochrome architectural facade with repeating geometric forms"
-                fill
-                priority
-                sizes="(max-width: 1023px) 100vw, (max-width: 1279px) 42vw, 33vw"
-                className="object-cover grayscale contrast-125 brightness-[0.82]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/15 to-transparent" />
-              <div className="absolute inset-x-4 bottom-4 flex items-end justify-between gap-4 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-foreground/80">
-                <span>Vaasa / Finland</span>
-                <span className="text-subtle">63.09°N</span>
-              </div>
-            </div>
-          </div>
-
-          <aside className="hidden border-l border-border pl-6 xl:col-span-2 xl:flex xl:flex-col xl:justify-end xl:gap-8">
-            <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-subtle">
-              Proof
-            </p>
-            {proofPoints.map((point, index) => (
-              <div key={point}>
-                <span className="font-mono text-[0.62rem] tracking-[0.12em] text-accent">
-                  0{index + 1}
-                </span>
-                <p className="mt-2 text-[0.76rem] leading-relaxed text-muted">
-                  {point}
-                </p>
-              </div>
-            ))}
-          </aside>
+        <div
+          className={`hero-building absolute bottom-0 bg-surface ${
+            PORTRAIT_SRC
+              ? "left-[18%] h-[78%] w-[30%]"
+              : "left-[22%] h-[84%] w-[40%]"
+          }`}
+        >
+          <Image
+            src={withBasePath("/images/hero-architecture.jpg")}
+            alt=""
+            fill
+            priority
+            sizes="(max-width: 1023px) 60vw, 26vw"
+            className="object-cover grayscale contrast-125 brightness-[0.7]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-transparent to-transparent" />
         </div>
 
-        <div className="mt-14 flex flex-col gap-6 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between xl:hidden">
-          <ul className="grid gap-5 sm:grid-cols-3 sm:gap-6">
-            {proofPoints.map((point, index) => (
-              <li key={point} className="flex gap-3">
-                <span className="font-mono text-[0.62rem] leading-5 tracking-[0.12em] text-accent">
-                  0{index + 1}
-                </span>
-                <span className="text-[0.78rem] leading-5 text-muted">
-                  {point}
-                </span>
+        {PORTRAIT_SRC ? (
+          <div className="absolute bottom-0 left-[44%] h-[96%] w-[30%]">
+            <Image
+              src={withBasePath(PORTRAIT_SRC)}
+              alt=""
+              fill
+              priority
+              sizes="(max-width: 1023px) 40vw, 20vw"
+              className="object-contain object-bottom grayscale"
+            />
+          </div>
+        ) : null}
+
+        {/* Blend the visual into the section below. */}
+        <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#121212] to-transparent" />
+      </div>
+
+      <PageContainer className="relative z-10">
+        <div className="max-w-[540px] pb-14 pt-[120px] sm:pb-16 lg:pb-20 lg:pt-[132px]">
+          <p className="eyebrow hero-in" style={delay(40)}>
+            Full-Stack Engineer&nbsp;&nbsp;/&nbsp;&nbsp;Finland
+          </p>
+
+          <h1
+            className="text-display hero-in mt-4 max-w-[520px] text-foreground"
+            style={delay(120)}
+          >
+            Engineering systems that scale{" "}
+            <span className="text-accent">beyond</span> the interface.
+          </h1>
+
+          <p
+            className="hero-in mt-6 max-w-[460px] text-[0.97rem] leading-relaxed text-[#e0e0e0]"
+            style={delay(220)}
+          >
+            I build robust backend architectures, modern web applications, and
+            reliable cloud-native systems.
+          </p>
+
+          <ul
+            className="hero-in mt-5 flex flex-wrap gap-2.5"
+            aria-label="Primary technologies"
+            style={delay(300)}
+          >
+            {technologies.map((technology) => (
+              <li key={technology}>
+                <TechTag>{technology}</TechTag>
               </li>
             ))}
           </ul>
-          <a
-            href="#projects"
-            className="hidden shrink-0 items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-subtle transition-colors hover:text-foreground sm:inline-flex"
+
+          <div
+            className="hero-in mt-6 flex flex-wrap gap-4"
+            style={delay(380)}
           >
-            Scroll
-            <ArrowDown width={14} height={14} />
-          </a>
+            <Button href="#projects">View My Projects</Button>
+            <Button href="#experience" variant="secondary" arrow={false}>
+              Learn More <span aria-hidden>↓</span>
+            </Button>
+          </div>
         </div>
       </PageContainer>
+
+      <dl
+        className="hero-in absolute right-[70px] top-1/2 z-10 hidden -translate-y-[35%] flex-col gap-6 border-l border-border-strong pl-6 xl:flex"
+        style={delay(460)}
+      >
+        {stats.map(({ icon: Icon, title, caption }) => (
+          <div key={title} className="flex items-center gap-4">
+            <span className="grid h-10 w-10 place-items-center text-accent">
+              <Icon width={22} height={22} />
+            </span>
+            <div>
+              <dt className="text-sm font-medium">{title}</dt>
+              <dd className="text-[0.8125rem] text-muted">{caption}</dd>
+            </div>
+          </div>
+        ))}
+      </dl>
     </section>
   );
 }

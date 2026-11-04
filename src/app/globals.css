@@ -5,20 +5,21 @@
    Charcoal surfaces, off-white type, and electric amber used as a signal.
 --------------------------------------------------------------------------- */
 @theme {
-  --color-background: #101112;
-  --color-surface: #191b1d;
-  --color-surface-elevated: #202224;
-  --color-border: #292d30;
+  --color-background: #141414;
+  --color-surface: #1c1c1c;
+  --color-surface-elevated: #222222;
+  --color-border: #2a2a2a;
+  --color-border-strong: #3a3a3a;
 
-  --color-foreground: #f0f0ec;
-  --color-muted: #a1a5a5;
-  --color-subtle: #808688;
+  --color-foreground: #f2f2f2;
+  --color-muted: #a7a7a7;
+  --color-subtle: #7c7c7c;
 
-  --color-accent: #ff9d0a;
-  --color-accent-hover: #ffb13d;
-  --color-accent-foreground: #171717;
+  --color-accent: #f7931e;
+  --color-accent-hover: #ff9f2e;
+  --color-accent-foreground: #111111;
 
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SFMono-Regular", monospace;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -27,9 +28,9 @@
 
 :root {
   color-scheme: dark;
-  --page-max-width: 1280px;
-  --gutter: clamp(20px, 5vw, 76px);
-  --section-space: clamp(64px, 8vw, 112px);
+  --page-max-width: 1320px;
+  --gutter: clamp(16px, 4vw, 40px);
+  --section-space: clamp(48px, 6vw, 80px);
 }
 
 *,
@@ -80,48 +81,118 @@ body {
   .eyebrow {
     display: inline-flex;
     align-items: center;
-    gap: 0.65rem;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 500;
-    letter-spacing: 0.16em;
+    gap: 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
     line-height: 1.4;
     text-transform: uppercase;
-    color: var(--color-muted);
-  }
-
-  .eyebrow::before {
-    content: "";
-    width: 1.75rem;
-    height: 1px;
-    flex: none;
-    background: var(--color-accent);
+    color: var(--color-accent);
   }
 
   .text-display {
-    font-size: clamp(3.2rem, 5vw, 4.8rem);
-    font-weight: 650;
-    line-height: 0.98;
-    letter-spacing: -0.045em;
+    font-size: clamp(2.5rem, 4.4vw, 3.6rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
     text-wrap: balance;
   }
 
   .text-section-title {
-    font-size: clamp(1.65rem, 3vw, 2.4rem);
-    font-weight: 620;
-    line-height: 1.08;
-    letter-spacing: -0.032em;
+    font-size: clamp(1.4rem, 2.2vw, 1.65rem);
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
     text-wrap: balance;
   }
 }
 
-/* Very quiet engineering grid used behind the hero only. */
-.hero-grid {
-  background-image:
-    linear-gradient(to right, rgba(240, 240, 236, 0.035) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(240, 240, 236, 0.035) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+/* Hero backdrop: soft charcoal spotlight behind the visual. */
+.hero-backdrop {
+  background: radial-gradient(
+    ellipse at 70% 40%,
+    #2b2b2b 0%,
+    #161616 55%,
+    #121212 100%
+  );
+}
+
+/* Diagonal amber bands that frame the hero visual. */
+.hero-stripe {
+  position: absolute;
+  background: var(--color-accent);
+  transform: rotate(38deg);
+}
+
+/* Faceted building silhouette that holds the architecture photo. */
+.hero-building {
+  clip-path: polygon(40% 0, 100% 12%, 100% 100%, 0 100%, 0 22%);
+}
+
+/* Full-bleed halves whose content still lines up with .page-container.
+   The offset lives in a custom property so the CSS minifier keeps it as-is. */
+:root {
+  --bleed-offset: max(
+    var(--gutter),
+    calc((100vw - var(--page-max-width)) / 2 + var(--gutter))
+  );
+}
+
+.bleed-start {
+  padding-left: var(--bleed-offset);
+}
+
+.bleed-end {
+  padding-right: var(--bleed-offset);
+}
+
+/* Text link with an offset underline, as used for section calls to action. */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-accent);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 200ms ease;
+}
+
+.text-link:hover {
+  color: var(--color-accent-hover);
+}
+
+/* Timeline rail with hollow amber markers. */
+.timeline {
+  position: relative;
+  padding-left: 2.25rem;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.4rem;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-border-strong);
+}
+
+.timeline > li {
+  position: relative;
+}
+
+.timeline > li::before {
+  content: "";
+  position: absolute;
+  left: calc(-2.25rem - 4px);
+  top: 0.3rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  border: 2px solid var(--color-accent);
+  background: var(--color-background);
 }
 
 /* Accessible skip link. */

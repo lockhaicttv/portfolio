@@ -6,7 +6,6 @@ import ScrollReveal from "@/components/ScrollReveal";
 import AboutSection from "@/components/sections/AboutSection";
 import ContactSection from "@/components/sections/ContactSection";
 import ExperienceSection from "@/components/sections/ExperienceSection";
-import ExpertiseSection from "@/components/sections/ExpertiseSection";
 import HeroSection from "@/components/sections/HeroSection";
 import SelectedWorkSection from "@/components/sections/SelectedWorkSection";
 
@@ -24,9 +23,13 @@ export default function Home() {
         <HeroSection />
         <SelectedWorkSection />
         <ExperienceSection />
-        <ExpertiseSection />
-        <AboutSection />
-        <ContactSection />
+        <section
+          aria-label="About and contact"
+          className="grid border-b border-border xl:grid-cols-[57%_43%]"
+        >
+          <AboutSection />
+          <ContactSection />
+        </section>
       </main>
       <Footer />
       <ScrollReveal />

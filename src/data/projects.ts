@@ -33,7 +33,7 @@ export const projects: Project[] = [
     image: "/images/project-equipment.jpg",
     imageAlt:
       "Stacked shipping containers at a logistics terminal, photographed in cool tones",
-    technologies: ["NestJS", "GraphQL", "PostgreSQL"],
+    technologies: ["NestJS", "GraphQL", "PostgreSQL", "Next.js", "gRPC"],
     period: "Jun 2024 – Jun 2026",
     role: "Full-Stack Engineer",
     teamSize: 12,
@@ -59,15 +59,47 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: "rite-aid-ecommerce",
-    title: "Rite Aid",
+    slug: "learning-management-system",
+    title: "Learning Management System",
+    category: "Internal platform",
+    summary:
+      "An internal LMS that showcases the company's corporate-training offering — led end to end, from UI to APIs, and approved for production launch.",
+    image: "/images/project-lms.svg",
+    imageAlt:
+      "Abstract illustration of course modules and a progress track, representing a learning management system",
+    technologies: ["Next.js", "NestJS", "GraphQL", "Ant Design"],
+    period: "Feb – May 2024",
+    role: "Full-Stack Engineer · Project lead",
+    teamSize: 9,
+    caseStudy: {
+      context:
+        "The company wanted a concrete way to present its corporate-training offering to prospective clients, rather than describing it in slides.",
+      purpose:
+        "The Learning Management System is an internal demo platform for courses, learners and progress. I led the project end to end, from the interface down to the APIs.",
+      contributions: [
+        "Led the project end to end, from UI to APIs.",
+        "Built the platform full-stack with Next.js and Ant Design on the frontend and NestJS with GraphQL on the backend.",
+        "Set up GraphQL codegen for the team so developers only write the queries — the typed hooks are generated.",
+      ],
+      challenge: {
+        title: "Shipping a demo on a fixed schedule",
+        body:
+          "A nine-person team had three months to deliver a credible demo. Hand-writing data hooks for every query was slowing everyone down, so I introduced GraphQL codegen early: the schema became the single source of truth and the repetitive client code disappeared.",
+      },
+      outcome:
+        "The demo phase was delivered on schedule, and management approved the product for production launch.",
+    },
+  },
+  {
+    slug: "pharma-distribution-platform",
+    title: "Pharma Distribution Platform",
     category: "Pharma commerce",
     summary:
-      "A B2C storefront, back office and CMS for a US pharmaceutical distributor — restructured into a shared monorepo with a common API SDK.",
+      "A B2C storefront, back office and CMS for a US pharmaceutical distributor offering health-insurance plans — restructured into a shared monorepo with a common API SDK.",
     image: "/images/project-pharma.jpg",
     imageAlt:
       "Pharmacy shelving and health products, representing a pharmaceutical commerce platform",
-    technologies: ["Next.js", "React", "Strapi"],
+    technologies: ["Next.js", "React", "Strapi", "Material UI"],
     period: "Sep 2022 – Feb 2024",
     role: "Frontend Engineer",
     teamSize: 10,
@@ -91,8 +123,40 @@ export const projects: Project[] = [
     },
   },
   {
+    slug: "hardwood-erp-platform",
+    title: "Hardwood ERP Platform",
+    category: "B2B ERP",
+    summary:
+      "Customer-facing tools for a B2B ERP in the hardwood industry — log inventory, timber contracts and auction-based procurement.",
+    image: "/images/project-hardwood.svg",
+    imageAlt:
+      "Abstract illustration of timber log cross-sections, representing a hardwood-industry ERP",
+    technologies: ["Next.js", "React", "Strapi", "Material UI"],
+    period: "May – Sep 2022",
+    role: "Frontend Engineer",
+    teamSize: 6,
+    caseStudy: {
+      context:
+        "Hardwood suppliers and buyers manage log inventory, timber contracts and procurement through a dedicated B2B ERP rather than generic commerce tools.",
+      purpose:
+        "The platform's customer-facing tools let businesses work with inventory, contracts and auction-based purchasing in one place. My work focused on maintaining and extending those tools.",
+      contributions: [
+        "Maintained and extended customer-facing ERP tools for log inventory and timber contracts.",
+        "Worked on auction-based procurement flows in Next.js and React.",
+        "Built on a Strapi v3 content layer and Material UI component system.",
+      ],
+      challenge: {
+        title: "Extending a domain-heavy product",
+        body:
+          "Timber trading has its own vocabulary and rules — grades, volumes, contract terms and auctions. Changes had to respect those workflows so that existing customers could keep trading without disruption.",
+      },
+      outcome:
+        "The customer-facing tools kept pace with new requirements while staying consistent for the businesses already using them.",
+    },
+  },
+  {
     slug: "b2b-enterprise-platform",
-    title: "B2B Enterprise",
+    title: "B2B Enterprise Demo",
     category: "Business platform",
     summary:
       "A B2B demo storefront backed by Elastic Path, kept reliable for sales demonstrations while its CMS and customer-facing tools were maintained.",

@@ -1,14 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Inter } from "next/font/google";
 
 import "./globals.css";
 import { siteConfig } from "@/data/site";
 import { withBasePath } from "@/lib/basePath";
 
-const sans = Geist({
+const sans = Inter({
   subsets: ["latin", "vietnamese"],
   display: "swap",
-  variable: "--font-geist-sans",
+  variable: "--font-inter",
 });
 
 const mono = Geist_Mono({
@@ -80,7 +80,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: "dark",
-  themeColor: "#101112",
+  themeColor: "#141414",
 };
 
 export default function RootLayout({

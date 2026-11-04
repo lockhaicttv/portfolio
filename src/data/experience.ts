@@ -5,6 +5,8 @@ export type Experience = {
   period: string;
   location: string;
   context: string;
+  /** One-line summary for the compact home-page timeline. */
+  summary: string;
   contributions: string[];
   technologies: string[];
 };
@@ -17,6 +19,8 @@ export const experiences: Experience[] = [
     period: "Feb 2024 – Jul 2026",
     location: "Vietnam",
     context: "Container logistics · enterprise systems",
+    summary:
+      "Migrated legacy business logic into NestJS microservices and GraphQL APIs for enterprise container logistics.",
     contributions: [
       "Migrated container, genset and transit-event business logic from a legacy system into modular microservices.",
       "Built NestJS services, GraphQL BFF APIs and gRPC methods on PostgreSQL, with Next.js operator screens.",
@@ -31,6 +35,7 @@ export const experiences: Experience[] = [
     period: "Sep 2021 – Feb 2024",
     location: "Vietnam",
     context: "E-commerce · B2B platforms",
+    summary: "Built B2C and B2B e-commerce platforms, back offices and CMS tooling.",
     contributions: [
       "Developed a pharma distribution storefront, back office and Strapi CMS for a US client.",
       "Restructured the codebase into a monorepo with shared components and a shared API SDK.",

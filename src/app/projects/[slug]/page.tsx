@@ -98,7 +98,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           <header className="relative overflow-hidden border-b border-border">
             <div
               aria-hidden
-              className="hero-grid pointer-events-none absolute inset-0 -z-10"
+              className="hero-backdrop pointer-events-none absolute inset-0 -z-10"
             />
             <PageContainer className="pb-12 pt-10 sm:pb-16 sm:pt-14 lg:pb-20 lg:pt-16">
               <nav aria-label="Breadcrumb">

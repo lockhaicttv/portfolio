@@ -1,5 +1,7 @@
 export const about = {
   headline: "A developer who turns complex problems into elegant solutions.",
+  summary:
+    "I'm a full-stack engineer passionate about building scalable systems, optimizing performance, and learning cutting-edge technologies — now deepening the cloud-native side with an MSc at VAMK in Finland.",
   paragraphs: [
     "I started in frontend engineering, building e-commerce and B2B products where the details — content models, shared components, a dependable checkout — decided whether a platform felt trustworthy. Over time the most interesting problems moved behind the interface: service boundaries, data ownership and the business logic that ties a system together.",
     "At Cyberlogitec I worked on a container-logistics platform, moving business logic out of a legacy system and into modular microservices. That experience shaped how I work now: understand the operational reality first, then choose the simplest architecture that can carry it.",

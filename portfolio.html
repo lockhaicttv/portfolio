@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>L.C. — Full-Stack Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#141414;
+    --bg-2:#181818;
+    --card:#1c1c1c;
+    --line:#2a2a2a;
+    --text:#f2f2f2;
+    --muted:#a7a7a7;
+    --dim:#7c7c7c;
+    --accent:#f7931e;
+    --accent-2:#ff9f2e;
+    --radius:10px;
+    --container:1320px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:15px;line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  .container{max-width:var(--container);margin:0 auto;padding:0 40px}
+  .accent{color:var(--accent)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+  /* ---------- Buttons & chips ---------- */
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:10px 18px;border-radius:999px;font-weight:500;font-size:14px;
+    transition:background .2s,color .2s,border-color .2s;
+  }
+  .btn-primary{background:var(--accent);color:#111}
+  .btn-primary:hover{background:var(--accent-2)}
+  .btn-outline{border:1px solid var(--accent);color:var(--accent)}
+  .btn-outline:hover{background:rgba(247,147,30,.1)}
+  .btn-sm{padding:6px 14px;font-size:12px}
+  .chip{
+    display:inline-block;padding:6px 14px;border-radius:999px;
+    border:1px solid var(--line);background:#1d1d1d;
+    font-size:13px;color:#dcdcdc;
+  }
+  .chip-sm{padding:4px 10px;font-size:11.5px}
+  .link{
+    color:var(--accent);font-weight:500;font-size:14px;
+    text-decoration:underline;text-underline-offset:3px;
+    display:inline-flex;gap:8px;align-items:center;
+  }
+  .link span{text-decoration:none}
+
+  /* ---------- Eyebrows ---------- */
+  .eyebrow{
+    font-size:12px;font-weight:600;letter-spacing:.12em;
+    color:var(--accent);text-transform:uppercase;
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow .num{color:var(--accent)}
+
+  /* ---------- Header ---------- */
+  header{
+    position:absolute;inset:0 0 auto 0;z-index:20;
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{font-size:28px;font-weight:800;letter-spacing:-.02em}
+  .logo .accent{color:var(--accent)}
+  .nav ul{display:flex;gap:36px;list-style:none}
+  .nav ul a{font-size:14px;color:#e5e5e5;padding:6px 0;position:relative}
+  .nav ul a.active{color:var(--accent)}
+  .nav ul a.active::after{
+    content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;background:var(--accent);
+  }
+  .nav .btn-outline{border-radius:6px;color:#fff}
+  .menu-toggle{display:none;background:none;border:0;color:#fff;font-size:24px;cursor:pointer}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;overflow:hidden;
+    min-height:425px;
+    background:
+      radial-gradient(ellipse at 70% 40%, #2b2b2b 0%, #161616 55%, #121212 100%);
+    border-bottom:1px solid var(--line);
+  }
+  .hero-inner{position:relative;z-index:2;padding:78px 0 26px 98px}
+  .hero h1{
+    font-size:clamp(36px,4.2vw,52px);line-height:.98;font-weight:700;
+    letter-spacing:-.02em;margin:14px 0 22px;max-width:520px;
+  }
+  .hero p.lead{color:#e0e0e0;font-size:15.5px;max-width:460px;margin-bottom:18px}
+  .chips{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:22px}
+  .hero-actions{display:flex;gap:18px;flex-wrap:wrap}
+
+  /* hero visual */
+  .hero-visual{
+    position:absolute;right:0;top:0;bottom:0;width:62%;z-index:1;pointer-events:none;
+  }
+  .stripe{
+    position:absolute;width:120px;height:900px;background:var(--accent);
+    transform:rotate(38deg);right:28%;top:-180px;opacity:.95;
+  }
+  .stripe.two{width:70px;right:44%;top:20px;opacity:.9;height:520px}
+  .building{
+    position:absolute;left:18%;bottom:0;width:30%;height:78%;
+    background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0 2px, transparent 2px 26px),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.06) 0 2px, transparent 2px 22px),
+      linear-gradient(120deg,#3a3a3a,#1a1a1a 60%,#0e0e0e);
+    clip-path:polygon(40% 0,100% 12%,100% 100%,0 100%,0 22%);
+    opacity:.9;
+  }
+  .portrait{
+    position:absolute;left:44%;bottom:0;width:30%;height:96%;
+    background:
+      radial-gradient(circle at 50% 22%, #8a8a8a 0 13%, transparent 13.5%),
+      radial-gradient(ellipse at 50% 100%, #0b0b0b 0 52%, transparent 52.5%);
+    filter:grayscale(1);
+  }
+  /* replace .portrait with your photo: */
+  .portrait img{width:100%;height:100%;object-fit:cover;object-position:top}
+
+  .hero-stats{
+    position:absolute;right:70px;top:50%;transform:translateY(-35%);
+    z-index:3;border-left:1px solid #3a3a3a;padding-left:24px;
+    display:flex;flex-direction:column;gap:22px;
+  }
+  .stat{display:flex;align-items:center;gap:16px}
+  .stat .ic{
+    width:40px;height:40px;border-radius:8px;display:grid;place-items:center;color:var(--accent);
+  }
+  .stat strong{display:block;font-weight:500;font-size:14px}
+  .stat small{color:var(--muted);font-size:13px}
+
+  /* ---------- Section frame ---------- */
+  section.band{border-bottom:1px solid var(--line)}
+  .work{display:grid;grid-template-columns:300px 1fr;gap:42px;padding:22px 0 14px}
+  .section-intro h2{
+    font-size:26px;line-height:1.2;font-weight:600;letter-spacing:-.01em;margin:12px 0 14px;
+  }
+  .section-intro p{color:#cfcfcf;font-size:13.5px;margin-bottom:24px;max-width:280px}
+
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    overflow:hidden;position:relative;display:flex;flex-direction:column;
+    transition:border-color .2s;
+  }
+  .card:hover{border-color:#444}
+  .card .thumb{height:94px;position:relative;filter:grayscale(.2)}
+  .card .arrow{position:absolute;top:12px;right:14px;color:#fff;font-size:18px}
+  .card-body{padding:14px 16px 14px}
+  .card h3{font-size:16px;font-weight:600}
+  .card .type{color:var(--muted);font-size:12.5px;margin:2px 0 12px}
+  .card .chips{gap:8px;margin:0}
+
+  /* placeholder thumbs */
+  .t-port{
+    background:
+      linear-gradient(to top,#1c1c1c 0%,transparent 35%),
+      repeating-linear-gradient(90deg,transparent 0 30px,#2f2f2f 30px 32px,transparent 32px 70px),
+      linear-gradient(#7c8ea3,#c7cdd3 60%,#3a3a3a 61%);
+  }
+  .t-store{
+    background:
+      linear-gradient(to top,#1c1c1c 0%,transparent 35%),
+      repeating-linear-gradient(90deg,#5a5a5a 0 2px,transparent 2px 18px),
+      linear-gradient(#bfbfbf 0 25%,#3b3b3b 25% 90%,#999 90%);
+  }
+  .t-wave{background:#121212;overflow:hidden}
+  .t-wave svg{width:100%;height:100%}
+
+  /* ---------- Experience + Skills ---------- */
+  .split{display:grid;grid-template-columns:1fr 1fr;padding:30px 0}
+  .exp{display:grid;grid-template-columns:300px 1fr;gap:0;padding-right:40px;border-right:1px solid var(--line)}
+  .timeline{position:relative;padding-left:40px}
+  .timeline::before{
+    content:"";position:absolute;left:0;top:6px;bottom:-28px;width:1px;background:#3a3a3a;
+  }
+  .t-item{position:relative;margin-bottom:22px}
+  .t-item::before{
+    content:"";position:absolute;left:-46px;top:3px;width:9px;height:9px;border-radius:50%;
+    border:2px solid var(--accent);background:var(--bg);
+  }
+  .t-item h4{font-size:14px;font-weight:600}
+  .t-item .date{color:#cfcfcf;font-size:12.5px;margin-bottom:8px}
+  .t-item p{color:#bdbdbd;font-size:12px;max-width:260px}
+
+  .skills{display:grid;grid-template-columns:290px 1fr;padding-left:34px}
+  .skill-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px 30px}
+  .skill{display:flex;gap:14px;align-items:flex-start}
+  .skill .ic{
+    width:32px;height:32px;flex:none;border:1px solid #3a3a3a;border-radius:7px;
+    display:grid;place-items:center;color:var(--accent);
+  }
+  .skill strong{display:block;font-size:14px;font-weight:600}
+  .skill small{color:var(--muted);font-size:12.5px}
+
+  /* ---------- About + Contact ---------- */
+  .bottom{display:grid;grid-template-columns:57% 43%}
+  .about{display:grid;grid-template-columns:340px 1fr;padding:26px 0 40px 98px}
+  .about-text{border-left:1px solid var(--line);padding-left:32px}
+  .about-text p{color:#d6d6d6;font-size:14px;max-width:310px;margin:14px 0 26px}
+  .about h2{font-size:21px;line-height:1.2;font-weight:600;margin-top:12px;max-width:300px}
+
+  .contact{
+    position:relative;padding:26px 40px 14px;overflow:hidden;min-height:170px;
+    background:linear-gradient(90deg,#1a1a1a 0%,#2a2a2a 55%,#3a3a3a 100%);
+  }
+  .contact .skyline{position:absolute;right:0;bottom:0;width:70%;height:100%;opacity:.55}
+  .contact .content{position:relative;z-index:2}
+  .contact h2{font-size:21px;line-height:1.2;font-weight:600;margin:10px 0 8px}
+  .contact p{color:#d6d6d6;font-size:13px;max-width:240px;margin-bottom:14px}
+
+  /* side rails like the mock */
+  .rail{position:absolute;top:0;bottom:0;width:1px;background:var(--line);z-index:0}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1180px){
+    .hero-stats{display:none}
+    .split{grid-template-columns:1fr}
+    .exp{border-right:0;border-bottom:1px solid var(--line);padding:0 0 26px}
+    .skills{padding:26px 0 0}
+    .bottom{grid-template-columns:1fr}
+    .about{padding-left:40px}
+  }
+  @media (max-width:900px){
+    .container{padding:0 22px}
+    .nav ul,.nav .btn-outline{display:none}
+    .menu-toggle{display:block}
+    .nav.open ul{
+      display:flex;flex-direction:column;gap:14px;position:absolute;top:68px;left:0;right:0;
+      background:#161616;padding:20px 22px;border-bottom:1px solid var(--line);
+    }
+    .hero-inner{padding:100px 0 34px 0}
+    .hero-visual{width:100%;opacity:.25}
+    .work{grid-template-columns:1fr}
+    .cards{grid-template-columns:1fr}
+    .exp,.skills,.about{grid-template-columns:1fr;gap:24px}
+    .skill-grid{grid-template-columns:1fr}
+    .about{padding:26px 22px}
+    .about-text{border-left:0;padding-left:0}
+  }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="container">
+    <nav class="nav" id="nav">
+      <a href="#home" class="logo">L.C<span class="accent">.</span></a>
+      <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="btn btn-outline">Let’s Talk <span aria-hidden="true">→</span></a>
+      <button class="menu-toggle" aria-label="Open menu" onclick="document.getElementById('nav').classList.toggle('open')">☰</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <div class="hero-visual" aria-hidden="true">
+    <div class="stripe"></div>
+    <div class="stripe two"></div>
+    <div class="building"></div>
+    <!-- Replace with: <div class="portrait"><img src="your-photo.png" alt=""></div> -->
+    <div class="portrait"></div>
+  </div>
+
+  <div class="container">
+    <div class="hero-inner">
+      <div class="eyebrow">Full-Stack Engineer &nbsp;/&nbsp; Finland</div>
+      <h1>Engineering systems that scale <span class="accent">beyond</span> the interface.</h1>
+      <p class="lead">I build robust backend architectures, modern web applications, and reliable cloud-native systems.</p>
+      <div class="chips">
+        <span class="chip">TypeScript</span>
+        <span class="chip">NestJS</span>
+        <span class="chip">React</span>
+        <span class="chip">PostgreSQL</span>
+        <span class="chip">Docker</span>
+      </div>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">View My Projects <span aria-hidden="true">→</span></a>
+        <a href="#experience" class="btn btn-outline">Learn More <span aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18"/></svg></div>
+      <div><strong>~5 Years</strong><small>Experience</small></div>
+    </div>
+    <div class="stat">
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></div>
+      <div><strong>Full-Stack</strong><small>Engineer</small></div>
+    </div>
+    <div class="stat">
+      <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg></div>
+      <div><strong>Cloud Engineering</strong><small>MSc @ VAMK</small></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SELECTED WORK ============ -->
+<section class="band" id="projects">
+  <div class="container">
+    <div class="work">
+      <div class="section-intro">
+        <div class="eyebrow"><span class="num">01.</span> Selected Work</div>
+        <h2>Turning ideas<br>into reliable products.</h2>
+        <p>From enterprise platforms to scalable cloud services, here are some of my works.</p>
+        <a href="#" class="link">View all projects <span aria-hidden="true">→</span></a>
+      </div>
+
+      <div class="cards">
+        <a href="#" class="card">
+          <div class="thumb t-port"></div>
+          <span class="arrow" aria-hidden="true">↗</span>
+          <div class="card-body">
+            <h3>Equipment Movement System</h3>
+            <div class="type">Enterprise Logistics</div>
+            <div class="chips">
+              <span class="chip chip-sm">NestJS</span>
+              <span class="chip chip-sm">GraphQL</span>
+              <span class="chip chip-sm">PostgreSQL</span>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="card">
+          <div class="thumb t-store"></div>
+          <span class="arrow" aria-hidden="true">↗</span>
+          <div class="card-body">
+            <h3>Rite Aid</h3>
+            <div class="type">E-commerce Platform</div>
+            <div class="chips">
+              <span class="chip chip-sm">Next.js</span>
+              <span class="chip chip-sm">Node.js</span>
+              <span class="chip chip-sm">PostgreSQL</span>
+            </div>
+          </div>
+        </a>
+        <a href="#" class="card">
+          <div class="thumb t-wave">
+            <svg viewBox="0 0 300 94" preserveAspectRatio="none" aria-hidden="true">
+              <g fill="none" stroke="#9a9a9a" stroke-width=".6" opacity=".7">
+                <path d="M0 70 C80 20 160 90 300 10"/><path d="M0 74 C80 26 160 92 300 16"/>
+                <path d="M0 78 C80 32 160 94 300 22"/><path d="M0 82 C80 38 160 96 300 28"/>
+                <path d="M0 86 C80 44 160 98 300 34"/><path d="M0 90 C80 50 160 100 300 40"/>
+                <path d="M0 66 C80 14 160 88 300 4"/><path d="M0 62 C80 8 160 86 300 -2"/>
+              </g>
+            </svg>
+          </div>
+          <span class="arrow" aria-hidden="true">↗</span>
+          <div class="card-body">
+            <h3>B2B Enterprise</h3>
+            <div class="type">Business Platform</div>
+            <div class="chips">
+              <span class="chip chip-sm">React</span>
+              <span class="chip chip-sm">TypeScript</span>
+              <span class="chip chip-sm">Express</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE + SKILLS ============ -->
+<section class="band" id="experience">
+  <div class="container">
+    <div class="split">
+      <div class="exp">
+        <div class="section-intro">
+          <div class="eyebrow"><span class="num">02.</span> Experience</div>
+          <h2 style="font-size:22px">5+ years of experience<br>in full-stack development.</h2>
+          <a href="#" class="link">View detailed experience <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="timeline">
+          <div class="t-item">
+            <h4>Cyberlogitec Vietnam</h4>
+            <div class="date">Feb 2024 – Jul 2026</div>
+            <p>Led backend architecture and business-logic migration for enterprise systems.</p>
+          </div>
+          <div class="t-item">
+            <h4>Digicommerce</h4>
+            <div class="date" style="margin-bottom:2px">Jul 2021 – 2023</div>
+            <p>Built B2C and B2B e-commerce platforms.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="skills">
+        <div class="section-intro">
+          <div class="eyebrow"><span class="num">03.</span> Technical Expertise</div>
+          <h2 style="font-size:22px">Modern technologies.<br>Real-world impact.</h2>
+          <a href="#" class="link">Explore my skills <span aria-hidden="true">→</span></a>
+        </div>
+        <div class="skill-grid">
+          <div class="skill">
+            <div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="6" rx="1"/><rect x="4" y="14" width="16" height="6" rx="1"/><circle cx="8" cy="7" r=".8" fill="currentColor"/><circle cx="8" cy="17" r=".8" fill="currentColor"/></svg></div>
+            <div><strong>Backend</strong><small>NestJS, Node.js</small></div>
+          </div>
+          <div class="skill">
+            <div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.5A4 4 0 1 1 17 18z"/></svg></div>
+            <div><strong>Cloud &amp; DevOps</strong><small>Docker, Linux</small></div>
+          </div>
+          <div class="skill">
+            <div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="1.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(120 12 12)"/></svg></div>
+            <div><strong>Frontend</strong><small>React, Next.js</small></div>
+          </div>
+          <div class="skill">
+            <div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l9 9-9 9-9-9z"/><path d="M9 12h6M12 9v6"/></svg></div>
+            <div><strong>API &amp; Integration</strong><small>GraphQL, REST</small></div>
+          </div>
+          <div class="skill">
+            <div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><ellipse cx="12" cy="5" rx="7" ry="2.5"/><path d="M5 5v14c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5V5M5 12c0 1.4 3.1 2.5 7 2.5s7-1.1 7-2.5"/></svg></div>
+            <div><strong>Database</strong><small>PostgreSQL, MongoDB</small></div>
+          </div>
+          <div class="skill">
+            <div class="ic"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="3" y="16" width="6" height="5" rx="1"/><rect x="15" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M6 16v-4h12v4"/></svg></div>
+            <div><strong>Architecture</strong><small>Microservices</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT + CONTACT ============ -->
+<section class="bottom">
+  <div class="about" id="about">
+    <div>
+      <div class="eyebrow"><span class="num">04.</span> About Me</div>
+      <h2>A developer who turns complex problems into elegant solutions.</h2>
+    </div>
+    <div class="about-text">
+      <p>I’m a full-stack engineer passionate about building scalable systems, optimizing performance, and learning cutting-edge technologies.</p>
+      <a href="#" class="link">More about me <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+
+  <div class="contact" id="contact">
+    <!-- Simple city skyline silhouette (swap for a real photo if you like) -->
+    <svg class="skyline" viewBox="0 0 600 200" preserveAspectRatio="xMaxYMax slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="water" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#555"/><stop offset="1" stop-color="#1a1a1a"/>
+        </linearGradient>
+      </defs>
+      <rect x="0" y="140" width="600" height="60" fill="url(#water)"/>
+      <g fill="#0f0f0f">
+        <rect x="140" y="112" width="40" height="28"/><rect x="180" y="104" width="34" height="36"/>
+        <rect x="214" y="116" width="26" height="24"/>
+        <polygon points="250,140 250,96 256,96 260,40 264,96 270,96 270,140"/>
+        <rect x="270" y="108" width="48" height="32"/><rect x="318" y="100" width="30" height="40"/>
+        <rect x="348" y="114" width="40" height="26"/><rect x="388" y="106" width="36" height="34"/>
+        <rect x="424" y="96" width="24" height="44"/><rect x="448" y="110" width="50" height="30"/>
+        <rect x="498" y="98" width="40" height="42"/><rect x="538" y="112" width="62" height="28"/>
+      </g>
+      <g fill="#e8c27a" opacity=".55">
+        <rect x="190" y="112" width="2" height="2"/><rect x="200" y="120" width="2" height="2"/>
+        <rect x="290" y="118" width="2" height="2"/><rect x="330" y="110" width="2" height="2"/>
+        <rect x="400" y="116" width="2" height="2"/><rect x="460" y="120" width="2" height="2"/>
+        <rect x="510" y="108" width="2" height="2"/><rect x="560" y="122" width="2" height="2"/>
+      </g>
+    </svg>
+    <div class="content">
+      <div class="eyebrow"><span class="num">05.</span> Let’s Connect</div>
+      <h2>Have a project<br>in mind?</h2>
+      <p>I’m always open to discussing new ideas, collaborations, and opportunities.</p>
+      <a href="mailto:hello@example.com" class="btn btn-primary btn-sm">Get in Touch <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>

@@ -6,8 +6,7 @@ interface SectionEyebrowProps {
 export default function SectionEyebrow({ number, children }: SectionEyebrowProps) {
   return (
     <p className="eyebrow">
-      <span className="text-accent">{number}</span>
-      <span aria-hidden className="h-px w-5 bg-border" />
+      <span>{number}.</span>
       <span>{children}</span>
     </p>
   );

@@ -156,3 +156,29 @@ export function MapPinIcon(props: IconProps) {
     </svg>
   );
 }
+
+export function BriefcaseIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="3" y="7" width="18" height="13" rx="2" />
+      <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18" />
+    </svg>
+  );
+}
+
+export function CodeIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="m8 7-5 5 5 5M16 7l5 5-5 5M14 4l-4 16" />
+    </svg>
+  );
+}
+
+export function GraduationIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="m2 9 10-5 10 5-10 5-10-5Z" />
+      <path d="M6 11v5c3 2 9 2 12 0v-5" />
+    </svg>
+  );
+}

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { navLinks, siteConfig } from "@/data/site";
 import { withBasePath } from "@/lib/basePath";
-import { ArrowUpRight, CloseIcon, MenuIcon } from "@/components/ui/Icons";
+import { ArrowRight, CloseIcon, MenuIcon } from "@/components/ui/Icons";
 
 /** Keep the highlighted section in sync with the fixed header. */
 const HEADER_OFFSET = 120;
@@ -23,6 +23,7 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
     isHome ? "#home" : null,
   );
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(!isHome);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const hrefFor = (hash: string) =>
@@ -39,10 +40,15 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
 
     const updateActiveSection = () => {
       let current = "#home";
+      let currentTop = -Infinity;
 
+      // About and Contact share a row, so they share a top edge; keep the
+      // first one in DOM order instead of letting the later one win.
       for (const section of sections) {
-        if (section.getBoundingClientRect().top <= HEADER_OFFSET) {
+        const top = section.getBoundingClientRect().top;
+        if (top <= HEADER_OFFSET && top > currentTop + 1) {
           current = `#${section.id}`;
+          currentTop = top;
         }
       }
 
@@ -68,6 +74,15 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
   }, [isHome]);
 
   useEffect(() => {
+    if (!isHome) return;
+
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
+
+  useEffect(() => {
     if (!open) return;
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -84,21 +99,24 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
   return (
     <>
       <header
-        className="fixed inset-x-0 top-0 z-50 border-b border-border bg-background/90 backdrop-blur-md"
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-300 ${
+          scrolled || open
+            ? "border-border bg-background/90 backdrop-blur-md"
+            : "border-transparent bg-transparent"
+        }`}
         style={{ viewTransitionName: "site-header" }}
       >
-        <div className="page-container grid h-[72px] grid-cols-[1fr_auto_1fr] items-center gap-4">
+        <div className="page-container grid h-[68px] grid-cols-[1fr_auto_1fr] items-center gap-4">
           <a
             href={isHome ? "#home" : withBasePath("/")}
             aria-label={`L.C. — ${siteConfig.displayName} home`}
-            className="justify-self-start text-lg font-semibold tracking-[-0.02em]"
+            className="justify-self-start text-[1.75rem] font-extrabold leading-none tracking-[-0.02em]"
           >
-            L<span className="text-accent">.</span>C
-            <span className="text-accent">.</span>
+            L.C<span className="text-accent">.</span>
           </a>
 
           <nav aria-label="Primary" className="hidden lg:block">
-            <ul className="flex items-center gap-8">
+            <ul className="flex items-center gap-9">
               {navLinks.map((link) => {
                 const isActive = isHome && activeHref === link.href;
                 return (
@@ -106,16 +124,16 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
                     <a
                       href={hrefFor(link.href)}
                       aria-current={isActive ? "location" : undefined}
-                      className={`relative inline-flex py-2 text-[0.82rem] font-medium tracking-[0.01em] transition-colors ${
+                      className={`relative inline-flex py-1.5 text-sm transition-colors ${
                         isActive
-                          ? "text-foreground"
-                          : "text-muted hover:text-foreground"
+                          ? "text-accent"
+                          : "text-[#e5e5e5] hover:text-accent"
                       }`}
                     >
                       {link.label}
                       <span
                         aria-hidden
-                        className={`absolute inset-x-0 -bottom-0.5 h-px origin-left bg-accent transition-transform duration-300 ease-out ${
+                        className={`absolute inset-x-0 -bottom-1.5 h-0.5 origin-left bg-accent transition-transform duration-300 ease-out ${
                           isActive ? "scale-x-100" : "scale-x-0"
                         }`}
                       />
@@ -129,13 +147,13 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
           <div className="flex items-center justify-self-end gap-2">
             <a
               href={hrefFor("#contact")}
-              className="group/cta hidden h-10 items-center gap-2 rounded-[2px] border border-border px-4 text-[0.82rem] font-medium transition-colors hover:border-subtle hover:bg-surface sm:inline-flex"
+              className="group/cta hidden h-10 items-center gap-2 rounded-md border border-accent bg-background/85 px-[18px] text-sm font-medium text-foreground backdrop-blur-sm transition-colors hover:bg-[#2a1d0e] sm:inline-flex"
             >
               Let&apos;s Talk
-              <ArrowUpRight
+              <ArrowRight
                 width={15}
                 height={15}
-                className="text-accent transition-transform duration-200 group-hover/cta:translate-x-0.5 group-hover/cta:-translate-y-0.5"
+                className="transition-transform duration-200 group-hover/cta:translate-x-0.5"
               />
             </a>
 
@@ -145,7 +163,7 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
               onClick={() => setOpen((value) => !value)}
               aria-expanded={open}
               aria-controls="mobile-nav"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-[2px] border border-border text-foreground transition-colors hover:bg-surface lg:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-foreground transition-colors hover:bg-surface lg:hidden"
             >
               <span className="sr-only">
                 {open ? "Close navigation menu" : "Open navigation menu"}
@@ -175,7 +193,7 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
                       }`}
                     >
                       {link.label}
-                      <span className="font-mono text-[0.65rem] tracking-[0.16em] text-subtle">
+                      <span className="text-xs tracking-[0.12em] text-subtle">
                         {String(index + 1).padStart(2, "0")}
                       </span>
                     </a>
@@ -186,15 +204,16 @@ export default function Navbar({ variant = "home" }: NavbarProps) {
             <a
               href={hrefFor("#contact")}
               onClick={() => setOpen(false)}
-              className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-[2px] bg-accent text-sm font-semibold text-accent-foreground"
+              className="mt-4 inline-flex h-11 w-full items-center justify-center gap-2 rounded-full bg-accent text-sm font-semibold text-accent-foreground"
             >
               Let&apos;s Talk
-              <ArrowUpRight width={16} height={16} />
+              <ArrowRight width={16} height={16} />
             </a>
           </nav>
         </div>
       </header>
-      <div aria-hidden className="h-[72px]" />
+      {/* The home hero sits under the transparent header; other pages need a spacer. */}
+      {isHome ? null : <div aria-hidden className="h-[68px]" />}
     </>
   );
 }

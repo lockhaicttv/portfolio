@@ -2,9 +2,12 @@
 
 import { useCallback, useRef, useState, type CSSProperties, type PointerEvent } from "react";
 import Image from "next/image";
+import Link from "next/link";
+
+import { ArrowRight } from "@/components/ui/Icons";
+import TechTag from "@/components/ui/TechTag";
 import { projects } from "@/data/projects";
 import { withBasePath } from "@/lib/basePath";
-import SkillBadges from "./SkillBadges";
 
 export type ElasticProjectReelProps = {
   /** Camera distance in px. Smaller values exaggerate the depth of the stage. */
@@ -29,6 +32,10 @@ export type ElasticProjectReelProps = {
   rim?: number;
   /** Share of the reel width taken by the open slice (0.35 – 0.8). */
   openSize?: number;
+  /** Reel height in px. */
+  height?: number;
+  /** Slice that starts open; -1 starts with every slice closed. */
+  defaultActive?: number;
 };
 
 const defaults: Required<ElasticProjectReelProps> = {
@@ -43,6 +50,8 @@ const defaults: Required<ElasticProjectReelProps> = {
   shadow: 0.5,
   rim: 0.18,
   openSize: 0.62,
+  height: 540,
+  defaultActive: -1,
 };
 
 /**
@@ -67,8 +76,10 @@ export default function ElasticProjectReel({
   shadow = defaults.shadow,
   rim = defaults.rim,
   openSize = defaults.openSize,
+  height = defaults.height,
+  defaultActive = defaults.defaultActive,
 }: ElasticProjectReelProps = {}) {
-  const [activeIndex, setActiveIndex] = useState(-1);
+  const [activeIndex, setActiveIndex] = useState(defaultActive);
   const [proximity, setProximity] = useState<number[]>(() =>
     projects.map(() => 0),
   );
@@ -103,8 +114,12 @@ export default function ElasticProjectReel({
 
   return (
     <div
-      className="relative flex h-[540px] w-full items-stretch gap-3 sm:gap-4 lg:gap-5"
-      style={{ perspective: `${perspective}px`, perspectiveOrigin: "50% 50%" }}
+      className="relative flex w-full items-stretch gap-3 sm:gap-4 lg:gap-5"
+      style={{
+        height,
+        perspective: `${perspective}px`,
+        perspectiveOrigin: "50% 50%",
+      }}
       onPointerMove={handlePointerMove}
       onPointerLeave={resetProximity}
       onClick={() => {
@@ -155,13 +170,18 @@ export default function ElasticProjectReel({
               e.stopPropagation();
               setActiveIndex(isActive ? -1 : index);
             }}
+            onKeyDown={(e) => {
+              if (e.key === "Escape" && isActive) setActiveIndex(-1);
+            }}
             tabIndex={0}
-            role="button"
-            aria-expanded={isActive}
-            aria-label={project.title}
+            // Closed slices act as buttons; the open one is a card whose only
+            // control is its case-study link, so it must not nest in a button.
+            role={isActive ? "group" : "button"}
+            aria-expanded={isActive ? undefined : false}
+            aria-label={isActive ? undefined : `Show ${project.title}`}
             style={sliceStyle}
             className={[
-              "group relative flex overflow-hidden rounded-xl border border-border transition-[flex-grow,transform,box-shadow] will-change-transform",
+              "group relative flex overflow-hidden rounded-[10px] border border-border bg-surface transition-[flex-grow,transform,box-shadow] will-change-transform",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background",
               "cursor-pointer",
             ].join(" ")}
@@ -186,10 +206,13 @@ export default function ElasticProjectReel({
             )}
 
             {!isActive && (
-              <div className="relative z-10 flex h-full w-full items-center justify-center">
+              <div className="relative z-10 flex h-full w-full flex-col items-center gap-4 py-5">
+                <span className="text-xs font-semibold text-accent">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
                 <h3
-                  className="select-none whitespace-nowrap text-sm font-medium uppercase tracking-[0.4em] [writing-mode:vertical-rl] rotate-180 sm:text-base"
-                  style={{ opacity: 0.55 + hover * 0.45 }}
+                  className="min-h-0 flex-1 select-none overflow-hidden text-ellipsis whitespace-nowrap text-[0.72rem] font-semibold uppercase tracking-[0.16em] [writing-mode:vertical-rl] rotate-180"
+                  style={{ opacity: 0.6 + hover * 0.4 }}
                 >
                   {project.title}
                 </h3>
@@ -197,43 +220,61 @@ export default function ElasticProjectReel({
             )}
 
             {isActive && (
-              <div className="relative z-10 grid h-full w-full grid-cols-1 sm:grid-cols-12">
-                <div className="relative col-span-1 h-52 sm:col-span-5 sm:h-full lg:col-span-4">
+              <div className="relative z-10 grid h-full w-full grid-cols-12">
+                <div className="relative col-span-4 h-full">
                   {hasImage ? (
                     <Image
                       src={withBasePath(project.image)}
-                      alt={`Ảnh đại diện dự án ${project.title}`}
+                      alt={project.imageAlt}
                       fill
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 42vw, 34vw"
-                      className="object-cover"
-                      priority={index === 0}
+                      sizes="16vw"
+                      className="object-cover grayscale-[0.2] brightness-[0.85]"
+                      priority={index === defaultActive}
                     />
                   ) : (
                     <div className="h-full w-full bg-gradient-to-br from-accent/25 to-transparent" />
                   )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent sm:bg-gradient-to-r sm:from-transparent sm:to-surface" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-surface" />
                 </div>
 
-                <div className="col-span-1 flex flex-1 flex-col justify-center gap-4 p-5 sm:col-span-7 sm:p-8 lg:col-span-8 lg:p-10">
-                  <div className="flex flex-col gap-3">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <SkillBadges skills={project.technologies} />
-                    </div>
-                    <p className="text-sm opacity-80">
+                <div className="col-span-8 flex min-w-0 flex-col justify-center gap-3.5 p-6">
+                  <p className="eyebrow">
+                    <span>{String(index + 1).padStart(2, "0")}.</span>
+                    <span>{project.category}</span>
+                  </p>
+
+                  <div>
+                    <h3 className="text-xl font-semibold leading-tight tracking-[-0.015em]">
+                      {project.title}
+                    </h3>
+                    <p className="mt-1 text-[0.75rem] text-muted">
                       {project.role}
-                      {project.teamSize ? ` · team of ${project.teamSize}` : ""} ·{" "}
+                      {project.teamSize ? ` · team of ${project.teamSize}` : ""}
+                      {" · "}
                       {project.period}
                     </p>
                   </div>
 
-                  <div className="max-w-3xl">
-                    <h2 className="mb-2 text-xl font-medium sm:text-2xl lg:text-3xl">
-                      {project.title}
-                    </h2>
-                    <p className="text-sm leading-relaxed opacity-95 sm:text-base">
-                      {project.summary}
-                    </p>
-                  </div>
+                  <p className="line-clamp-3 max-w-xl text-[0.8125rem] leading-relaxed text-[#d6d6d6]">
+                    {project.summary}
+                  </p>
+
+                  <ul className="flex flex-wrap gap-2">
+                    {project.technologies.slice(0, 4).map((technology) => (
+                      <li key={technology}>
+                        <TechTag size="sm">{technology}</TechTag>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    onClick={(e) => e.stopPropagation()}
+                    className="text-link self-start"
+                  >
+                    Read case study
+                    <ArrowRight width={15} height={15} />
+                  </Link>
                 </div>
               </div>
             )}

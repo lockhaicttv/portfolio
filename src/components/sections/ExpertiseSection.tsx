@@ -1,5 +1,4 @@
-import PageContainer from "@/components/layout/PageContainer";
-import SectionHeading from "@/components/ui/SectionHeading";
+import SectionEyebrow from "@/components/ui/SectionEyebrow";
 import {
   BrowserIcon,
   CloudIcon,
@@ -19,56 +18,41 @@ const icons: Record<ExpertiseGroup["icon"], typeof ServerIcon> = {
   layers: LayersIcon,
 };
 
+/** Right half of the experience band. */
 export default function ExpertiseSection() {
   return (
-    <section id="expertise" className="section-shell border-t border-border">
-      <PageContainer>
-        <div data-reveal>
-          <SectionHeading
-            number="03"
-            eyebrow="Technical expertise"
-            title="Modern technologies. Real-world impact."
-            description="A compact view of what I use in production, what I apply in projects, and what I am actively deepening."
-          />
-        </div>
+    <div
+      id="expertise"
+      className="grid gap-8 pt-10 md:grid-cols-[260px_1fr] xl:grid-cols-[210px_1fr] xl:pl-9 xl:pt-0"
+      data-reveal
+    >
+      <div>
+        <SectionEyebrow number="03">Technical Expertise</SectionEyebrow>
+        <h2 className="mt-3 text-[1.375rem] font-semibold leading-[1.2] tracking-[-0.01em]">
+          Modern technologies.
+          <br />
+          Real-world impact.
+        </h2>
+      </div>
 
-        <div className="mt-12 grid gap-x-16 sm:grid-cols-2" data-reveal>
-          {expertise.map((group) => {
-            const Icon = icons[group.icon];
-
-            return (
-              <div
-                key={group.id}
-                className="flex gap-4 border-t border-border py-7"
-              >
-                <span className="mt-0.5 flex h-10 w-10 shrink-0 items-center justify-center rounded-[2px] border border-border bg-surface text-accent">
-                  <Icon width={18} height={18} />
-                </span>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-baseline justify-between gap-3">
-                    <h3 className="text-[0.98rem] font-semibold tracking-[-0.01em]">
-                      {group.title}
-                    </h3>
-                    <span className="shrink-0 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-subtle">
-                      {group.level}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-[0.82rem] leading-relaxed text-muted">
-                    {group.description}
-                  </p>
-                  <p className="mt-3 font-mono text-[0.68rem] uppercase leading-relaxed tracking-[0.08em] text-foreground/75">
-                    {group.skills.join(" · ")}
-                  </p>
-                </div>
+      <ul className="grid gap-x-6 gap-y-5 sm:grid-cols-2">
+        {expertise.map((group) => {
+          const Icon = icons[group.icon];
+          return (
+            <li key={group.id} className="flex items-start gap-3.5">
+              <span className="grid h-8 w-8 shrink-0 place-items-center rounded-[7px] border border-border-strong text-accent">
+                <Icon width={16} height={16} />
+              </span>
+              <div>
+                <h3 className="text-sm font-semibold">{group.title}</h3>
+                <p className="text-[0.78rem] text-muted">
+                  {group.skills.slice(0, 2).join(", ")}
+                </p>
               </div>
-            );
-          })}
-        </div>
-
-        <p className="mt-8 border-t border-border pt-5 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-subtle">
-          Core = production experience · Working = applied in shipped projects
-        </p>
-      </PageContainer>
-    </section>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 }
